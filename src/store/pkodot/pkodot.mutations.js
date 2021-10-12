@@ -48,7 +48,6 @@ export default {
     }),
 
     deletePkoda: ((state, options) => {
-        debugger
         //remove the pkoda from pkodot array
         const index = state.pkodot.findIndex(p => p.id === options.pkodaId)
         state.pkodot.splice(index, 1)

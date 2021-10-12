@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-light-green window-height window-width row justify-center items-center">
+  <q-page class="bg-light-green full-height full-width row justify-center items-center">
     <div class="column">
       <div class="row">
         <h5 class="text-h5 text-white q-my-md">Business Profit - Sign In</h5>
@@ -9,7 +9,7 @@
           <q-card-section>
             <q-form class="q-gutter-md">
               <q-input square filled clearable v-model="email" type="email" label="Email" />
-              <q-input square filled clearable v-model="password" type="password" label="Password" />
+              <q-input square filled clearable v-model="password" autocomplete="on" type="password" label="Password" />
             </q-form>
             <q-btn class="q-ma-sm full-width" :ripple="{ center: true }" color="light-green-7" size="lg" label="Login" @click="login()"/>
             <q-btn class="full-width" @click="loginWithGoogle()">Sign in with Google</q-btn>

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" id="app">
     <q-header elevated class="glossy">
       <q-toolbar>
         <q-btn
@@ -9,16 +9,21 @@
             @click="leftDrawerOpen = !leftDrawerOpen"
             aria-label="Menu"
             icon="menu"
+            v-show="this.user"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="text-center text-bold	text-h5">
           Business Profit
         </q-toolbar-title>
 
+        <q-item>{{userName}}</q-item>
+        <q-img v-if="this.user" :src='this.userPhoto' class="rounded-borders" style="height: 32px; max-width: 32px"/>
         <div>
-          <q-btn v-if="this.user" @click="userLogout()">התנתק</q-btn>
-          <q-btn v-if="!this.user" @click="goToLoginPage()">התחבר</q-btn>
+          <q-btn id="loginBtn" v-if="!this.user" @click="goToLoginPage()">התחבר</q-btn>
+
+          <q-btn id="logoutBtn" v-if="this.user" @click="userLogout()">התנתק</q-btn>
         </div>
+        
       </q-toolbar>
     </q-header>
 
@@ -28,23 +33,23 @@
         content-class="bg-grey-2"
     >
       <q-list>
-        <q-item clickable tag="a" @click="goToLoginPage()">
+        <q-item clickable @click="goToPage('user')">
           <q-item-section avatar>
             <q-icon name="school"/>
           </q-item-section>
           <q-item-section>
-            <q-item-label>Home</q-item-label>
+            <q-item-label>הגדרות משתמש</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" @click="goToAboutPage()">
+        <q-item clickable>
           <q-item-section avatar>
             <q-icon name="code"/>
           </q-item-section>
           <q-item-section>
-            <q-item-label>About</q-item-label>
+            <q-item-label>דוחות</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
+        <!-- <q-item clickable tag="a">
           <q-item-section avatar>
             <q-icon name=""/>
           </q-item-section>
@@ -53,7 +58,7 @@
             <q-item-label caption>chat.quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
+        <q-item clickable tag="a">
           <q-item-section avatar>
             <q-icon name="forum"/>
           </q-item-section>
@@ -62,7 +67,7 @@
             <q-item-label caption>forum.quasar.dev</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
+        <q-item clickable tag="a">
           <q-item-section avatar>
             <q-icon name="rss_feed"/>
           </q-item-section>
@@ -70,13 +75,21 @@
             <q-item-label>Twitter</q-item-label>
             <q-item-label caption>@quasarframework</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container >
       <router-view></router-view>
     </q-page-container>
+    <q-footer elevated class="glossy">
+      <q-toolbar class="justify-center">
+        <q-btn flat to='/' class="text-bold text-overline">home</q-btn>
+        <q-btn flat to='/about' class="text-bold text-overline">about</q-btn>
+        <q-btn flat to='/contact' class="text-bold text-overline">contact as</q-btn>
+      </q-toolbar>
+      <p class="text-center justify-center">Daniel Farangian 2021©</p>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -88,6 +101,9 @@ export default {
   name: 'LayoutDefault',
   methods: {
     userLogout() {
+      if (this.leftDrawerOpen){
+        this.leftDrawerOpen = false;
+      }
       firebaseInstance.firebase.auth().signOut().then(() => {
         // Sign-out successful.
         this.$router.push('/')
@@ -95,15 +111,19 @@ export default {
         // An error happened.
       });
     },
-    goToLoginPage() {
-      this.$router.push('/')
+    goToPage(path) {
+      if (this.$route.path === `/${path}`){
+        return;
+      } else {
+        this.$router.push(`/${path}`)
+      }
     },
-    goToAboutPage() {
-      this.$router.push('/about')
-    },
-    reset : () => {
-      window.user = null
-      this.user = false
+    goToLoginPage(){
+      if (this.$route.path === `/`){
+        return;
+      } else {
+        this.$router.push(`/`)
+      }
     }
   },
   components: {
@@ -114,21 +134,28 @@ export default {
     return {
       leftDrawerOpen: false,
       user:undefined,
-      // logButton: false
+      userPhoto: null,
+      userName: null,
     }
   },
   mounted() {
-    this.user = window.user;
-    if (this.user){
+    document.body.style.setProperty('--q-color-primary', '#5785BD')
+    if (window.user){
       this.user = true;
-    }
+      this.userPhoto = window.user.photoURL;
+      this.userName = window.user.displayName;
+      }
      },
-
-  // created() {
-  //
-  // }
 }
 </script>
 
-<style>
+<style >
+
+/* 
+color palette
+#344F70
+#B8D2F2
+#6EA9F0
+#435870
+#5785BD */
 </style>

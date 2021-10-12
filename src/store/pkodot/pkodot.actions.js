@@ -91,9 +91,9 @@ export default {
         //need to remove the last pkoda and insert the new pkoda
         await database.update({entity: state.path, pkoda})
 
+        //save in store
         commit('updatePkodaInPkodotHM', pkoda)
 
-        //save in store
         commit('resetEditedPkoda')
         commit('resetEditedPkodaId')
 
@@ -121,13 +121,11 @@ export default {
 
     setEditedPkodaById: async ({dispatch, state, commit}, options) => {
         let pkoda = {};
-        debugger
         //dispatch('getPath', state.editedPkoda.date)
         let path = `pkodot/${options.year}/${options.month}/${options.id}` //todo - try to use 'commit('getPath')'
         if (state.pkodot.length && state.pkodot.find(pkoda => pkoda.id === state.editedPkodaId)) {
             Object.assign(pkoda, state.editedPkoda)
         } else {
-            debugger
             pkoda = {...await database.read({entity: path})}
         }
 

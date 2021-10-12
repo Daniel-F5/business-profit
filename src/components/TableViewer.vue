@@ -1,12 +1,14 @@
 <template>
   <!--  render in table-->
-  <div class="q-pa-md" dir="rtl">
+  <div class="q-pa-sm" dir="rtl">
     <q-table
-        class="my-sticky-header-table"
+        class="my-sticky-header-table pkodot-table"
         title="פקודות יומן"
         :data="pkodot"
         :columns="columns"
         row-key="name"
+        no-data-label="אין נתונים"
+        :dense="$q.screen.lt.md"
         flat
         bordered
         binary-state-sort
@@ -14,64 +16,71 @@
         :rows-per-page-options="[0]"
     >
       <template v-slot:top>
-        <div class="q-pa-md">
+        <div class="row">
+        <div class="q-px-sm">
           <q-select
+              dense
               rounded outlined
               v-model="year"
               :options="years"
               label="בחר שנה"
-              style="min-width: 150px"
+              style="min-width: 110px"
               @input="setYear(year)"
           />
         </div>
-        <div class="q-pa-md">
+        <div class="q-px-sm">
           <q-select
+              dense
               rounded outlined
               v-if="year"
               v-model="month"
               :options="monthsAndYears[year]"
               label="בחר חודש"
-              style="min-width: 150px"
+              style="min-width: 120px"
               @input="setMonth(year, month)"
           />
+        </div>
         </div>
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="sector" :props="props">{{ props.row.sector }}</q-td>
-          <q-td key="type" :props="props">{{ props.row.type }}</q-td>
-          <q-td key="incomeOrExpense" :props="props">{{ props.row.incomeOrExpense }}</q-td>
-          <q-td key="referenceNumber" :props="props">{{ props.row.referenceNumber }}</q-td>
-          <q-td key="date" :props="props">{{ props.row.date }}</q-td>
-          <q-td key="prices.priceWithoutVAT" :props="props">
+          <q-td auto-width class="text-bold" key="sector" :props="props">{{ props.row.sector }}</q-td>
+          <q-td auto-width key="type" :props="props">{{ props.row.type }}</q-td>
+          <q-td auto-width key="incomeOrExpense" :props="props">{{ props.row.incomeOrExpense }}</q-td>
+          <q-td auto-width key="referenceNumber" :props="props">{{ props.row.referenceNumber }}</q-td>
+          <q-td auto-width key="date" :props="props">{{ props.row.date }}</q-td>
+          <q-td auto-width key="prices.priceWithoutVAT" :props="props">
             {{ props.row.prices.priceWithoutVAT }}
           </q-td>
-          <q-td key="prices.vat" :props="props">
+          <q-td auto-width key="prices.vat" :props="props">
             {{ props.row.prices.vat }}
           </q-td>
-          <q-td key="prices.priceIncludeVAT" :props="props">
+          <q-td auto-width key="prices.priceIncludeVAT" :props="props">
             {{ props.row.prices.priceIncludeVAT }}
           </q-td>
           <q-td key="details" :props="props">{{ props.row.details }}</q-td>
-          <q-td key="quantity" :props="props">{{ props.row.quantity }}</q-td>
-          <q-td key="docLink" :props="props">
+          <q-td auto-width key="quantity" :props="props">{{ props.row.quantity }}</q-td>
+          <q-td auto-width key="docLink" :props="props">
             <div v-if="props.row.doc.link">
               <a :props="props"
                  :href="props.row.doc.link"
                  target="popup"
                  onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
-                <q-icon name="receipt" size="md">
+                <q-icon class="desktop-only" name="receipt" size="md">
                 </q-icon>
               </a>
             </div>
           </q-td>
           <q-td key="actions" :props="props">
-            <q-btn @click="remove(props.row)">מחק</q-btn>
-            <q-btn @click="goToPkoda(props.row)">עדכון</q-btn>
+            <q-btn-group rounded dir="ltr">
+            <q-btn glossy @click="remove(props.row)">מחק</q-btn>
+            <q-btn glossy @click="goToPkoda(props.row)">עדכן</q-btn>
+            </q-btn-group>
           </q-td>
         </q-tr>
       </template>
-      <template v-slot:pagination>
+
+      <!-- <template v-slot:pagination>
         <q-table
             :columns="[columns[0],columns[8],columns[4],columns[5],columns[6]]"
             style="background-color: #c1f4cd"
@@ -83,10 +92,10 @@
             </q-trs>
           </template>
         </q-table>
-      </template>
+      </template> -->
     </q-table>
-    <q-footer elevated>
-    </q-footer>
+    <!-- <q-footer elevated>
+    </q-footer> -->
   </div>
 </template>
 
@@ -130,7 +139,9 @@ export default {
     remove(pkoda) {
       this.setEditedPkodaId(pkoda.id)
       this.getPath(pkoda.date)
-      this.deleteDoc()
+      if (pkoda.doc.fileName){
+        this.deleteDoc()
+      }
       this.deletePkoda()
     },
 
@@ -185,15 +196,16 @@ export default {
 </script>
 
 <style lang="sass">
+
 .my-sticky-header-table
   /* height or max-height is important */
-  height: 700px
+  height: 680px
 
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th
     /* bg color is important for th; just specify one */
-    background-color: #c1f4cd
+    background-color: #6EA9F0
 
   thead tr th
     position: sticky
@@ -207,4 +219,8 @@ export default {
   &.q-table--loading thead tr:last-child th
     /* height of   all previous header rows */
     top: 20px
+.q-btn-group, 
+.q-btn
+  background: #435870
+  color: white
 </style>

@@ -1,6 +1,6 @@
 <template>
   <q-page
-      class="bg-green-3 window-height window-width justify-center items-center"
+  class="page"
   >
   <div class="home">
     <AddPkoda :tableName="'pkodot'" @pkodaAdded="reloadTable"/>
@@ -31,3 +31,8 @@ export default {
   }
 }
 </script>
+<style lang="sass">
+.page
+  background-color:#B8D2F2
+
+</style>

@@ -1,6 +1,6 @@
 <template>
   <q-page
-      class="bg-green window-height window-width row justify-center items-center"
+      class="bg-green full-height full-width row justify-center items-center"
   >
     <div class="column q-pa-lg">
       <div class="row">
@@ -23,7 +23,7 @@
                   <q-icon name="person" />
                 </template>
               </q-input>
-              <q-input square clearable v-model="password" type="password" label="Password">
+              <q-input square clearable v-model="password" autocomplete="on" type="password" label="Password">
                 <template v-slot:prepend>
                   <q-icon name="lock" />
                 </template>
