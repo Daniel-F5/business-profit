@@ -17,7 +17,7 @@
         </q-toolbar-title>
 
         <q-item>{{userName}}</q-item>
-        <q-img v-if="this.user" :src='this.userPhoto' class="rounded-borders" style="height: 32px; max-width: 32px"/>
+        <q-img v-if="this.user" :src='this.userPhoto' class="userImg"/>
         <div>
           <q-btn id="loginBtn" v-if="!this.user" @click="goToLoginPage()">התחבר</q-btn>
 
@@ -149,13 +149,20 @@ export default {
 }
 </script>
 
-<style >
+<style lang="sass" >
+.userImg 
+  height: 32px;
+  max-width: 32px;
+  border-radius: 50%
+  
+.page
+    background-color:#B8D2F2
 
-/* 
-color palette
-#344F70
-#B8D2F2
-#6EA9F0
-#435870
-#5785BD */
+// 
+// color palette
+// #344F70
+// #B8D2F2
+// #6EA9F0
+// #435870
+// #5785BD
 </style>

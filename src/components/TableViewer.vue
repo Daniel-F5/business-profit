@@ -44,7 +44,6 @@
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td auto-width class="text-bold" key="sector" :props="props">{{ props.row.sector }}</q-td>
           <q-td auto-width key="type" :props="props">{{ props.row.type }}</q-td>
           <q-td auto-width key="incomeOrExpense" :props="props">{{ props.row.incomeOrExpense }}</q-td>
           <q-td auto-width key="referenceNumber" :props="props">{{ props.row.referenceNumber }}</q-td>
@@ -109,7 +108,6 @@ export default {
   data() {
     return {
       columns: [
-        {name: 'sector', label: 'ענף', field: 'sector', sortable: true},
         {
           name: 'type',
           label: 'סוג מסמך',

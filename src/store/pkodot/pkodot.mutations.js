@@ -10,11 +10,11 @@ export default {
 
     setPath: ((state, path) => state.path = path),
 
+    resetPath: ((state) => state.path = ''),
+
     setCurrentYear: ((state, year) => state.currentYear = year),
 
     setCurrentMonth: ((state, month) => state.currentMonth = month),
-
-    resetPath: ((state, path) => state.path = ''),
 
     resetPkodot: ((state) => state.pkodot = []),
 
@@ -23,7 +23,6 @@ export default {
     resetEditedPkoda: ((state) => {
         state.editedPkoda = {
                 type: '',
-                sector: '',
                 referenceNumber: '',
                 incomeOrExpense: '',
                 date: '',
@@ -131,5 +130,4 @@ export default {
             state.pkodot.push(pkoda)
         }
     },
-
 }

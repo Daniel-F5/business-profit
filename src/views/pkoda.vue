@@ -10,7 +10,7 @@
 
 <script>
 import AddPkoda from "@/components/AddPkoda";
-import {mapActions, mapState, mapMutations, mapGetters} from "vuex";
+import {mapState} from "vuex";
 
 
 export default {

@@ -2,11 +2,7 @@
 <q-page
 class="page">
 <div>
-    <q-img
-    :src='this.userPhoto'
-    class="rounded-borders"
-    style="height: 40px; max-width: 40px">
-    </q-img>
+    <q-img :src='this.userPhoto' class="userImg"/>
     <p>{{userName}}</p>
 </div>
 </q-page>
@@ -25,7 +21,5 @@ export default {
 </script>
 
 <style lang="sass">
-.page
-  background-color:#B8D2F2
 
 </style>

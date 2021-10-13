@@ -1,12 +1,40 @@
 <template dir="rtl">
-  <div class="q-py-md q-mx-sm pkoda-input" dir="rtl">
-    <q-form class="q-gutter-sm q-mx-sm justify-center row items-start">
-      <q-input class="col-md-1 col-sm-2 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.sector" label='ענף'/>
-      <q-select class="col-md-1 col-sm-2 col-xs-12 text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type"  :options="typeOptions"/>
-      <q-input class="col-md-1 col-sm-2 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
+  <div class="q-py-md q-mx-xs pkoda-input" dir="rtl">
+    <q-form class="q-gutter-sm q-mx-sm justify-evenly row items-start">
+
+      <div class="col-md-2 col-sm-2 col-xs-12">
+      <q-select class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type"  :options="typeOptions"/>
+      <q-input class="text-subtitle1" stack-label clearable clear-icon="close"
                v-model="localEditedPkoda.incomeOrExpense" label='סוג הכנסה / הוצאה'/>
-      <q-input class="col-md-1 col-sm-2 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'/>
-      <q-input class="col-md-1 col-sm-2 col-xs-12" stack-label clearable clear-icon="close"
+      <q-input class="text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'/>
+      </div>
+
+      <div class="col-md-2 col-sm-3 col-xs-5">
+        <q-input class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
+         v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ' />      
+        <q-input class="text-subtitle1" stack-label clearable clear-icon="close"
+                 type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'/>
+        <q-input class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
+                  v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'/>
+      </div>
+
+      <div class="col col-auto column justify-between" style="height: 168px">
+        <div>
+          <div class="q-py-sm q-pt-md">
+            <q-btn size="md" dense glossy label='חשב סכום כולל מע"מ' @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)"/>          
+          </div>
+        </div>
+      <!-- <div class="row"><div class="q-py-sm q-pt-xl fit"></div></div> -->
+        <div>
+          <div class="q-py-sm q-pt-md">
+            <q-btn size="md" dense glossy label='חשב סכום ללא מע"מ' @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col col-sm-3 col-xs-12 column">
+        <div class="row justify-evenly">
+      <q-input class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" 
                v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -20,22 +48,28 @@
           </q-icon>
         </template>
       </q-input>
-      <div class="col-md-1 col-sm-3 col-xs-12">
-        <q-input class="text-subtitle1" dense stack-label clearable clear-icon="close" type="number"
-         v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ' />      
-        <q-input class="text-subtitle1" dense stack-label clearable clear-icon="close"
-                 type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'/>
-        <q-input class="text-subtitle1" dense stack-label clearable clear-icon="close" type="number"
-                  v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'/>
-                <div class="relative-position row q-mt-sm fit col-md-1">
-                  <q-btn size="sm" class="fit" dense glossy label='חשב סכום ללא מע"מ' @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)"/>
-                  <q-btn size="sm" class="fit" dense glossy label='חשב סכום כולל מע"מ' @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)"/>
-                 </div>
-      </div>
-      <q-input class="col-md-2 col-sm-4 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.details" label='פרטים'/>
-      <q-input class="col-md-1 col-sm-2 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
+      <q-input class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
                type="number" v-model="localEditedPkoda.quantity" label='כמות'/>
-      <div class="row col-md-1 col-sm-2 col-xs-12 text-subtitle1 justify-evenly" v-if="localEditedPkoda.doc.link" >
+      
+      <q-input class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
+              v-model="localEditedPkoda.details" label='פרטים'/>
+      </div>
+      </div>
+
+
+      
+
+      <div class="col col-sm-8 col-xs-12 q-pt-sm">
+        <div class="row justify-evenly">
+      <div class="col-md-3 col-sm-5 col-xs-5 q-pb-sm" v-show="!localEditedPkoda.doc.link">
+        <q-file dense outlined stack-label clearable v-model="file" id="photo" label="הוסף מסמך">
+        <template v-slot:append>
+          <q-icon name="attach_file" />
+        </template>
+        </q-file>
+      </div>
+
+      <div class="col col-sm-12 col-xs-12 column text-subtitle1" v-if="localEditedPkoda.doc.link" >
         <a
           :href="localEditedPkoda.doc.link"
           target="popup"
@@ -46,20 +80,18 @@
           <q-icon name="delete"/>
         </q-btn>
       </div>
-      <div class="col-md-1 col-sm-2 col-xs-12" v-show="!localEditedPkoda.doc.link">
-        <q-file stack-label clearable v-model="file" id="photo" label="הוסף מסמך">
-        <template v-slot:append>
-          <q-icon name="attach_file" />
-        </template>
-        </q-file>
-      </div>
-      <div class="row col-md-1 col-sm-4 col-xs-12">
-        <q-btn class="fit text-bold" size="sm" glossy v-if="!localEditedPkoda.id" label="הזן פקודה" icon="send" @click="insert()"/>
-        <q-btn-group dir="ltr" class="fit">
-        <q-btn size="sm" class="col-6 text-bold" glossy v-if="localEditedPkoda.id" label="עדכן פקודה" @click="update()"><q-icon name="update"/></q-btn>
-        <q-btn size="sm" class="col-6 text-bold" glossy v-if="localEditedPkoda.id" label="מחק פקודה" @click="remove()"><q-icon name="delete"/></q-btn>
+
+        <div class="col-md-3 col-sm-5 col-xs-5 q-pb-sm" v-if="!localEditedPkoda.id">
+          <q-btn class="fit text-bold" size="md" glossy  label="הזן פקודה" icon="send" @click="insert()"/>
+        </div>
+        <q-btn-group dir="ltr" class="fit" v-if="localEditedPkoda.id">
+        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="עדכן פקודה" @click="update()"><q-icon name="update"/></q-btn>
+        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="מחק פקודה" @click="remove()"><q-icon name="delete"/></q-btn>
+        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="חזור לעמוד הראשי" @click="goToHome()"><q-icon name="home"/></q-btn>
         </q-btn-group>
+        </div>
       </div>
+
     </q-form>
   </div>
 </template>
@@ -82,7 +114,6 @@ export default {
       typeOptions: ['הכנסה', 'הוצאה', 'רכוש קבוע'],
       localEditedPkoda: {
         type: '',
-        sector: '',
         referenceNumber: '',
         incomeOrExpense: '',
         date: '',

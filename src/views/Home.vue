@@ -32,7 +32,5 @@ export default {
 }
 </script>
 <style lang="sass">
-.page
-  background-color:#B8D2F2
 
 </style>
