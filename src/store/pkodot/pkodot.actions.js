@@ -140,4 +140,14 @@ export default {
         commit('setPath', path)
     },
 
+    resetPkodotStore: ({commit}) => {
+        commit('resetCurrentYearAndMonth');
+        commit('resetEditedPkoda');
+        commit('resetEditedPkodaId');
+        commit('resetPath');
+        commit('resetPkodot');
+        commit('resetPkodotHm');
+        commit('resetMonthsAndYears');
+        commit('resetYears');
+    }
 }

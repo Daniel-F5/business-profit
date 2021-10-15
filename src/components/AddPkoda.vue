@@ -3,38 +3,42 @@
     <q-form class="q-gutter-sm q-mx-sm justify-evenly row items-start">
 
       <div class="col-md-2 col-sm-2 col-xs-12">
-      <q-select class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type"  :options="typeOptions"/>
-      <q-input class="text-subtitle1" stack-label clearable clear-icon="close"
+      <q-select dense class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type"  :options="typeOptions"/>
+      <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close"
                v-model="localEditedPkoda.incomeOrExpense" label='סוג הכנסה / הוצאה'/>
-      <q-input class="text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'/>
+      <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'/>
       </div>
 
-      <div class="col-md-2 col-sm-3 col-xs-5">
-        <q-input class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-         v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ' />      
-        <q-input class="text-subtitle1" stack-label clearable clear-icon="close"
-                 type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'/>
-        <q-input class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-                  v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'/>
-      </div>
-
-      <div class="col col-auto column justify-between" style="height: 168px">
-        <div>
-          <div class="q-py-sm q-pt-md">
-            <q-btn size="md" dense glossy label='חשב סכום כולל מע"מ' @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)"/>          
-          </div>
-        </div>
-      <!-- <div class="row"><div class="q-py-sm q-pt-xl fit"></div></div> -->
-        <div>
-          <div class="q-py-sm q-pt-md">
-            <q-btn size="md" dense glossy label='חשב סכום ללא מע"מ' @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)"/>
-          </div>
-        </div>
+      <div class="col-md-2 col-sm-3 col-xs-12">
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
+         v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ'>
+         <template v-slot:append>
+           <q-btn size="md" dense glossy @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)">
+            <q-icon name="calculate"/>
+           </q-btn>  
+         </template>
+        </q-input>      
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close"
+                 type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'>
+                 <template v-slot:append>
+                <q-btn size="md" dense glossy @click="vatCalculate()">
+                  <q-icon name="calculate"/>
+                </q-btn>
+                 </template>
+        </q-input>
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
+                  v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'>
+        <template v-slot:append>
+          <q-btn size="md" dense glossy @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)">
+            <q-icon name="calculate"/>
+          </q-btn>
+        </template>
+        </q-input>
       </div>
       
       <div class="col col-sm-3 col-xs-12 column">
-        <div class="row justify-evenly">
-      <q-input class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" 
+        <div class="">
+      <q-input dense class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" 
                v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -48,10 +52,10 @@
           </q-icon>
         </template>
       </q-input>
-      <q-input class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
+      <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
                type="number" v-model="localEditedPkoda.quantity" label='כמות'/>
       
-      <q-input class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
+      <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
               v-model="localEditedPkoda.details" label='פרטים'/>
       </div>
       </div>
@@ -59,8 +63,8 @@
 
       
 
-      <div class="col col-sm-8 col-xs-12 q-pt-sm">
-        <div class="row justify-evenly">
+      <div class="col col-sm-3 col-xs-12 column">
+        <div class="">
       <div class="col-md-3 col-sm-5 col-xs-5 q-pb-sm" v-show="!localEditedPkoda.doc.link">
         <q-file dense outlined stack-label clearable v-model="file" id="photo" label="הוסף מסמך">
         <template v-slot:append>
@@ -237,18 +241,75 @@ export default {
       this.localEditedPkoda.quantity = parseFloat(this.localEditedPkoda.quantity);
     },
 
-    vatFromPriceInc(priceIncludeVAT) {
-      let sumWithVAT = parseFloat(priceIncludeVAT);
-      let sumWithoutVAT = sumWithVAT / 1.17;
-      this.localEditedPkoda.prices.priceWithoutVAT = sumWithoutVAT.toFixed(2);
-      this.localEditedPkoda.prices.vat = (sumWithVAT - sumWithoutVAT).toFixed(2)
+    vatCalculate() {
+      let checkIfVatEmpty = (this.localEditedPkoda.prices.vat == 0 || this.localEditedPkoda.prices.vat === null);
+      //calculate from the price include v.a.t.
+      if (this.localEditedPkoda.prices.priceWithoutVAT == 0 || this.localEditedPkoda.prices.priceWithoutVAT === null){
+        if (this.localEditedPkoda.prices.priceIncludeVAT != 0 || this.localEditedPkoda.prices.priceIncludeVAT !== null){
+          //calculate 17% v.a.t if the vat input is empty
+          if (checkIfVatEmpty){
+            this.vatFromPriceInc();
+          } else {
+            let vat = parseFloat(this.localEditedPkoda.prices.vat);
+            let sumWithVAT = parseFloat(this.localEditedPkoda.prices.priceIncludeVAT);
+            let sumWithoutVAT = sumWithVAT / 1.17;
+            let maxVat = (sumWithVAT - sumWithoutVAT).toFixed(2);
+            //check if the number in the vat input is bigger then 17% of price include v.a.t.
+            if (vat >= maxVat){ 
+              this.localEditedPkoda.prices.priceWithoutVAT = sumWithoutVAT.toFixed(2);
+              this.localEditedPkoda.prices.vat = maxVat;
+            } else {
+              this.localEditedPkoda.prices.priceWithoutVAT = (sumWithVAT - vat).toFixed(2);
+            }
+          }
+        }
+        // there is missing numbers to calculate..
+        else {
+          //can't calculate please enter price without v.a.t. or price include v.a.t.
+        }
+      }
+      //calculate from the price without v.a.t.
+      else {
+        
+        if (this.localEditedPkoda.prices.priceIncludeVAT == 0 || this.localEditedPkoda.prices.priceIncludeVAT === null){
+          if (checkIfVatEmpty){
+            this.vatFromPriceWithout();
+          } else {
+            let vat = parseFloat(this.localEditedPkoda.prices.vat);
+            let sumWithoutVAT = parseFloat(this.localEditedPkoda.prices.priceWithoutVAT);
+            let sumWithVAT = sumWithoutVAT * 1.17;
+            let maxVat = (sumWithVAT - sumWithoutVAT).toFixed(2);
+            //check if the number in the vat input is bigger then 17% of price include v.a.t.
+            if (vat >= maxVat){ 
+              this.localEditedPkoda.prices.priceIncludeVAT = sumWithVAT.toFixed(2);
+              this.localEditedPkoda.prices.vat = maxVat;
+            } else {
+              this.localEditedPkoda.prices.priceIncludeVAT = sumWithoutVAT + vat;
+            }
+          }
+        }
+        
+        else {
+          if (checkIfVatEmpty){
+            
+          }
+          
+        }
+      }
     },
 
-    vatFromPriceWithout(priceWithoutVAT) {
-      let sumWithoutVAT = parseFloat(priceWithoutVAT);
+    vatFromPriceInc() {
+      let sumWithVAT = parseFloat(this.localEditedPkoda.prices.priceIncludeVAT);
+      let sumWithoutVAT = sumWithVAT / 1.17;
+      this.localEditedPkoda.prices.priceWithoutVAT = sumWithoutVAT.toFixed(2);
+      this.localEditedPkoda.prices.vat = (sumWithVAT - sumWithoutVAT).toFixed(2);
+    },
+
+    vatFromPriceWithout() {
+      let sumWithoutVAT = parseFloat(this.localEditedPkoda.prices.priceWithoutVAT);
       let sumWithVAT = sumWithoutVAT * 1.17;
       this.localEditedPkoda.prices.priceIncludeVAT = sumWithVAT.toFixed(2);
-      this.localEditedPkoda.prices.vat = (sumWithVAT - sumWithoutVAT).toFixed(2)
+      this.localEditedPkoda.prices.vat = (sumWithVAT - sumWithoutVAT).toFixed(2);
     },
 
     addDoc() {
@@ -283,8 +344,6 @@ export default {
       this.setPath(`pkodot/${this.$route.params.year}/${this.$route.params.month}/${this.$route.params.id}`)
       this.setEditedPkodaId(this.$route.params.id)
       this.setEditedPkodaById({
-        //todo - try to use the state instead the route
-        //try 1 = not work in case of refresh page because we don't get the path in the fireBase to set the editedPkoda
         id: this.$route.params.id,
         year: this.$route.params.year,
         month: this.$route.params.month

@@ -6,19 +6,31 @@ export default {
 
     setEditedPkodaId: ((state, id) => state.editedPkodaId = id),
 
-    setEditedPkoda: ((state, pkoda) => state.editedPkoda = pkoda),
-
-    setPath: ((state, path) => state.path = path),
-
-    resetPath: ((state) => state.path = ''),
-
     setCurrentYear: ((state, year) => state.currentYear = year),
 
     setCurrentMonth: ((state, month) => state.currentMonth = month),
 
+    setPath: ((state, path) => state.path = path),
+
+    setMonthsAndYears: (state,monthsAndYears) => state.monthsAndYears = monthsAndYears,
+
+    setYears: (state,years) => state.years = years,
+
+    setEditedPkoda: ((state, pkoda) => state.editedPkoda = pkoda),
+
     resetPkodot: ((state) => state.pkodot = []),
 
+    resetPkodotHm: ((state) => state.pkodotHm = {}),
+
     resetEditedPkodaId: ((state) => state.editedPkodaId = ''),
+
+    resetCurrentYearAndMonth: ((state) => {state.currentYear = ''; state.currentMonth = ''}),
+
+    resetPath: ((state) => state.path = ''),
+
+    resetMonthsAndYears: ((state) => state.MonthsAndYears = {}),
+
+    resetYears: ((state) => state.years = []),
 
     resetEditedPkoda: ((state) => {
         state.editedPkoda = {
@@ -83,16 +95,7 @@ export default {
         state.pkodotHm[year][month][id] = pkoda
     }),
 
-    setMonthsAndYears: (state,monthsAndYears) => {
-        state.monthsAndYears = monthsAndYears
-    },
-    setYears: (state,years) => {
-        state.years = years
-    },
-
     insertPkoda:(state, pkoda) => {
-        debugger
-        console.log(pkoda)
         const pathArr = state.path.split('/');
         const year = pathArr[1]
         const month = pathArr[2]

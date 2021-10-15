@@ -6,9 +6,9 @@
         title="פקודות יומן"
         :data="pkodot"
         :columns="columns"
+        :filter="filter"
         row-key="name"
         no-data-label="אין נתונים"
-        :dense="$q.screen.lt.md"
         flat
         bordered
         binary-state-sort
@@ -16,6 +16,11 @@
         :rows-per-page-options="[0]"
     >
       <template v-slot:top>
+        <q-input borderless dense debounce="300" v-model="filter" placeholder="חפש">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
         <div class="row">
         <div class="q-px-sm">
           <q-select
@@ -110,24 +115,27 @@ export default {
       columns: [
         {
           name: 'type',
+          required: true,
           label: 'סוג מסמך',
-          align: 'left',
+          align: 'center',
           field: row => row.type,
+          format: val => `${val}`,
           sortable: true
         },
-        {name: 'incomeOrExpense', label: 'סוג הכנסה / הוצאה', field: 'incomeOrExpense', sortable: true},
-        {name: 'referenceNumber', label: 'מספר אסמכתא', field: 'referenceNumber'},
-        {name: 'date', label: 'תאריך', field: 'date', sortable: true},
-        {name: 'prices.priceWithoutVAT', label: 'סכום ללא מע"מ', field: 'priceWithoutVAT'},
-        {name: 'prices.vat', label: 'מע"מ', field: 'vat'},
-        {name: 'prices.priceIncludeVAT', label: 'סכום כולל מע"מ', field: 'priceIncludeVAT'},
-        {name: 'details', label: 'פרטים', field: 'details'},
-        {name: 'quantity', label: 'כמות', field: 'quantity', sortable: true},
-        {name: 'docLink', label: 'מסמך'},
-        {name: 'actions', label: 'פעולות'},
+        {name: 'incomeOrExpense',align: 'center', label: 'סוג הכנסה / הוצאה', field: 'incomeOrExpense', sortable: true},
+        {name: 'referenceNumber',align: 'center', label: 'מספר אסמכתא', field: 'referenceNumber'},
+        {name: 'date',align: 'center', label: 'תאריך', field: 'date', sortable: true},
+        {name: 'prices.priceWithoutVAT',align: 'center', label: 'סכום ללא מע"מ', field: 'priceWithoutVAT'},
+        {name: 'prices.vat',align: 'center', label: 'מע"מ', field: 'vat'},
+        {name: 'prices.priceIncludeVAT',align: 'center', label: 'סכום כולל מע"מ', field: 'priceIncludeVAT'},
+        {name: 'details',align: 'center', label: 'פרטים', field: 'details'},
+        {name: 'quantity',align: 'center', label: 'כמות', field: 'quantity', sortable: true},
+        {name: 'docLink',align: 'center', label: 'מסמך'},
+        {name: 'actions',align: 'center', label: 'פעולות'},
       ],
       year: '',
       month: '',
+      filter: ''
     }
   },
   computed: mapState('pkodot', ['monthsAndYears', 'years', 'editedPkodaId', 'pkodot', 'years', 'pkodotHm', 'path', 'currentMonth', 'currentYear']),
@@ -142,6 +150,7 @@ export default {
       }
       this.deletePkoda()
     },
+    
 
     deleteDoc() {
       const storage = firebaseInstance.firebase.storage();

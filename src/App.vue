@@ -96,16 +96,19 @@
 <script>
 import Home from './views/Home'
 import firebaseInstance from './middleware/firebase'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'LayoutDefault',
   methods: {
+    ...mapActions('pkodot', ['resetPkodotStore']),
     userLogout() {
       if (this.leftDrawerOpen){
         this.leftDrawerOpen = false;
       }
       firebaseInstance.firebase.auth().signOut().then(() => {
         // Sign-out successful.
+        this.resetPkodotStore();
         this.$router.push('/')
       }).catch((error) => {
         // An error happened.
@@ -149,7 +152,7 @@ export default {
 }
 </script>
 
-<style lang="sass" >
+<style lang="sass">
 .userImg 
   height: 32px;
   max-width: 32px;
