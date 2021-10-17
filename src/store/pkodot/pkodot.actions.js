@@ -116,13 +116,13 @@ export default {
         commit('setPkodotHm', state.pkodotHm)
 
         commit('resetEditedPkoda')
+        commit('resetEditedPkodaId')
 
     },
 
-    setEditedPkodaById: async ({dispatch, state, commit}, options) => {
+    setEditedPkodaById: async ({state, commit}, options) => {
         let pkoda = {};
-        //dispatch('getPath', state.editedPkoda.date)
-        let path = `pkodot/${options.year}/${options.month}/${options.id}` //todo - try to use 'commit('getPath')'
+        let path = `pkodot/${options.year}/${options.month}/${options.id}`
         if (state.pkodot.length && state.pkodot.find(pkoda => pkoda.id === state.editedPkodaId)) {
             Object.assign(pkoda, state.editedPkoda)
         } else {

@@ -3,14 +3,15 @@
   class="page"
   >
   <div class="home">
-    <AddPkoda :tableName="'pkodot'" @pkodaAdded="reloadTable"/>
-    <TableViewer :tableName="'pkodot'" :isReload="isReload"/>
+    <AddPkoda :tableName="'pkodot'"/>
+    <TableViewer :tableName="'pkodot'"/>
   </div>
   </q-page>
 </template>
 
 <script>
 // @ is an alias to /src
+import {mapState, mapActions, mapMutations, mapGetters} from 'vuex'
 import TableViewer from '../components/TableViewer';
 import AddPkoda from '../components/AddPkoda';
 
@@ -21,13 +22,19 @@ export default {
   },
   data(){
     return {
-      isReload: false
+      // isReload: false
     }
   },
   methods: {
-    reloadTable(){
-      this.isReload = !this.isReload;
-    }
+    ...mapMutations('pkodot', ['resetEditedPkoda', 'resetEditedPkodaId', 'resetPath'])
+    // reloadTable(){
+    //   this.isReload = !this.isReload;
+    // }
+  },
+  created() {
+    this.resetEditedPkoda();
+    this.resetEditedPkodaId();
+    this.resetPath();
   }
 }
 </script>

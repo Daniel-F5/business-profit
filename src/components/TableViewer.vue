@@ -1,6 +1,6 @@
 <template>
   <!--  render in table-->
-  <div class="q-pa-sm" dir="rtl">
+  <div class="q-pa-xs" dir="rtl">
     <q-table
         class="my-sticky-header-table pkodot-table"
         title="פקודות יומן"
@@ -15,13 +15,14 @@
         virtual-scroll
         :rows-per-page-options="[0]"
     >
-      <template v-slot:top>
+      <template v-slot:top-left>
+        <div class="row">
         <q-input borderless dense debounce="300" v-model="filter" placeholder="חפש">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
-        <div class="row">
+        <div class="row inline">
         <div class="q-px-sm">
           <q-select
               dense
@@ -46,6 +47,16 @@
           />
         </div>
         </div>
+        </div>
+      </template>
+      <template v-slot:top-right>
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Export to csv"
+          no-caps
+          @click="exportTable"
+        />
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -104,6 +115,7 @@
 </template>
 
 <script>
+import { exportFile } from 'quasar'
 import {mapState, mapActions, mapMutations} from 'vuex'
 import firebaseInstance from '../middleware/firebase'
 
@@ -151,6 +163,52 @@ export default {
       this.deletePkoda()
     },
     
+    wrapCsvValue (val, formatFn) {
+      let formatted = formatFn !== void 0
+        ? formatFn(val)
+        : val
+
+      formatted = formatted === void 0 || formatted === null
+        ? ''
+        : String(formatted)
+
+      formatted = formatted.split('"').join('""')
+      /**
+       * Excel accepts \n and \r in strings, but some other CSV parsers do not
+       * Uncomment the next two lines to escape new lines
+       */
+      // .split('\n').join('\\n')
+      // .split('\r').join('\\r')
+
+      return `"${formatted}"`
+    },
+
+    exportTable () {
+        // naive encoding to csv format
+        let rows = this.pkodot;
+        const content = [this.columns.map(col => this.wrapCsvValue(col.label))].concat(
+          rows.map(row => this.columns.map(col => this.wrapCsvValue(
+            typeof col.field === 'function'
+              ? col.field(row)
+              : row[ col.field === void 0 ? col.name : col.field ],
+            col.format
+          )).join(','))
+        ).join('\r\n')
+
+        const status = exportFile(
+          'table-export.csv',
+          content,
+          'text/csv'
+        )
+
+        // if (status !== true) {
+        //   $q.notify({
+        //     message: 'Browser denied file download...',
+        //     color: 'negative',
+        //     icon: 'warning'
+        //   })
+        // }
+      },
 
     deleteDoc() {
       const storage = firebaseInstance.firebase.storage();
@@ -206,7 +264,7 @@ export default {
 
 .my-sticky-header-table
   /* height or max-height is important */
-  height: 680px
+  height: 550px
 
   .q-table__top,
   .q-table__bottom,

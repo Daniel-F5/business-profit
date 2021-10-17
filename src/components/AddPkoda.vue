@@ -1,25 +1,26 @@
 <template dir="rtl">
   <div class="q-py-md q-mx-xs pkoda-input" dir="rtl">
-    <q-form class="q-gutter-sm q-mx-sm justify-evenly row items-start">
-
+    <q-form ref="myForm" class="q-gutter-sm q-mx-sm justify-evenly row items-start" @submit="onSubmit()">
       <div class="col-md-2 col-sm-2 col-xs-12">
-      <q-select dense class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type"  :options="typeOptions"/>
+      <q-select dense class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type" :options="typeOptions"
+        hide-bottom-space lazy-rules :rules="[val => val.length > 0 || 'בחר סוג מסמך']"/>
       <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close"
-               v-model="localEditedPkoda.incomeOrExpense" label='סוג הכנסה / הוצאה'/>
-      <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'/>
+               maxlength="20" v-model="localEditedPkoda.incomeOrExpense" label='סוג הכנסה / הוצאה'/>
+      <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" v-model="localEditedPkoda.referenceNumber" label='מספר אסמכתא'
+        maxlength="20" />
       </div>
 
       <div class="col-md-2 col-sm-3 col-xs-12">
         <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-         v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ'>
+         maxlength="20" v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ'>
          <template v-slot:append>
            <q-btn size="md" dense glossy @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)">
             <q-icon name="calculate"/>
            </q-btn>  
          </template>
-        </q-input>      
+        </q-input>
         <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close"
-                 type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'>
+            maxlength="20" type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'>
                  <template v-slot:append>
                 <q-btn size="md" dense glossy @click="vatCalculate()">
                   <q-icon name="calculate"/>
@@ -27,7 +28,7 @@
                  </template>
         </q-input>
         <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-                  v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'>
+            maxlength="20" v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'>
         <template v-slot:append>
           <q-btn size="md" dense glossy @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)">
             <q-icon name="calculate"/>
@@ -38,8 +39,8 @@
       
       <div class="col col-sm-3 col-xs-12 column">
         <div class="">
-      <q-input dense class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" 
-               v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####">
+      <q-input dense class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" hide-bottom-space
+            v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####" lazy-rules :rules="[val => val.length > 0 || 'תאריך שגוי']">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy>
@@ -53,15 +54,12 @@
         </template>
       </q-input>
       <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
-               type="number" v-model="localEditedPkoda.quantity" label='כמות'/>
+        maxlength="20" type="number" v-model="localEditedPkoda.quantity" label='כמות'/>
       
       <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
-              v-model="localEditedPkoda.details" label='פרטים'/>
+        maxlength="40" v-model="localEditedPkoda.details" label='פרטים'/>
       </div>
       </div>
-
-
-      
 
       <div class="col col-sm-3 col-xs-12 column">
         <div class="">
@@ -86,10 +84,10 @@
       </div>
 
         <div class="col-md-3 col-sm-5 col-xs-5 q-pb-sm" v-if="!localEditedPkoda.id">
-          <q-btn class="fit text-bold" size="md" glossy  label="הזן פקודה" icon="send" @click="insert()"/>
+          <q-btn type="submit" class="fit text-bold" size="md" glossy  label="הזן פקודה" color="primary" text-color="white"/>
         </div>
         <q-btn-group dir="ltr" class="fit" v-if="localEditedPkoda.id">
-        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="עדכן פקודה" @click="update()"><q-icon name="update"/></q-btn>
+        <q-btn size="sm" type="submit" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="עדכן פקודה"><q-icon name="update"/></q-btn>
         <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="מחק פקודה" @click="remove()"><q-icon name="delete"/></q-btn>
         <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="חזור לעמוד הראשי" @click="goToHome()"><q-icon name="home"/></q-btn>
         </q-btn-group>
@@ -162,11 +160,17 @@ export default {
       this.$router.push(`/`);
     },
 
+    onSubmit(){
+      this.editedPkodaId ? this.update() : this.insert()
+    },
+
     checkVaildDate() {
       if(date.isValid(this.localEditedPkoda.date)){
-        console.log("the date is valid")
+        console.log("the date is valid");
+        return true;
       } else {
-        console.log("unvalid date !!!")
+        console.log("unvalid date !!!");
+        return false;
       }
     },
 
@@ -189,6 +193,7 @@ export default {
             await self.setEditedPkodaInStore();
             self.insertPkoda().then(() => {
               self.cleanInputs()
+              this.$refs.myForm.resetValidation()
               if (lastId) {
                 self.goToHome()
               }
@@ -199,6 +204,7 @@ export default {
         self.setEditedPkodaInStore();
         self.insertPkoda().then(() => {
           self.cleanInputs()
+          this.$refs.myForm.resetValidation()
           if (lastId) {
             self.goToHome()
           }
@@ -213,11 +219,9 @@ export default {
       const lastId = this.$route.params.id
       //check if the date in the pkoda has changed
       if (tempMonthAndYear !== editedPkodaMonthAndYear) {
-        debugger
         this.deletePkoda(true);
         this.insert(lastId)
       } else {
-        debugger
         this.updatePkoda().then(() => {
               this.goToHome()
         }); //todo - build new function that update the database without use insert + remove
@@ -291,7 +295,7 @@ export default {
         
         else {
           if (checkIfVatEmpty){
-            
+
           }
           
         }

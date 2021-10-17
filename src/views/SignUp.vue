@@ -1,6 +1,6 @@
 <template>
   <q-page
-      class="bg-green full-height full-width row justify-center items-center"
+      class="full-height full-width row justify-center items-center"
   >
     <div class="column q-pa-lg">
       <div class="row">
