@@ -16,7 +16,11 @@ export default {
 
     setYears: (state,years) => state.years = years,
 
-    setEditedPkoda: ((state, pkoda) => state.editedPkoda = pkoda),
+    setEditedPkoda: ((state, pkoda) => {
+        state.editedPkoda = {...pkoda};
+        state.editedPkoda.prices = {...pkoda.prices};
+        state.editedPkoda.doc = {...pkoda.doc};
+    }),
 
     resetPkodot: ((state) => state.pkodot = []),
 
@@ -92,7 +96,15 @@ export default {
         const year = pathArr[1];
         const month = pathArr[2];
         const id = pathArr[3];
-        state.pkodotHm[year][month][id] = pkoda
+        if (state.pkodotHm){
+            if (state.pkodotHm[year]){
+                if (state.pkodotHm[year][month]){
+                    if (state.pkodotHm[year][month][id]){
+                        state.pkodotHm[year][month][id] = pkoda;
+                    }
+                }
+            }
+        }
     }),
 
     insertPkoda:(state, pkoda) => {

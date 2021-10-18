@@ -1,16 +1,14 @@
 <template>
-  <q-page
-      class="full-height full-width row justify-center items-center"
-  >
-    <div class="column q-pa-lg">
+  <q-page class="full-height full-width row justify-center items-center">
+    <div>
       <div class="row">
-        <h5 class="text-h5 text-white q-my-md">Business Profit - Sign Up</h5>
+        <h4 class="col text-center text-secondary q-my-md">Let's start!</h4>
       </div>
       <div class="row">
-        <q-card square class="shadow-24" style="width:300px;height:485px;">
-          <q-card-section>
-            <q-form class="q-px-sm q-pt-xl q-pb-lg">
-              <q-input square clearable v-model="email" type="email" label="Email">
+        <q-card square class="shadow-24 q-px-md">
+          <q-card-section class="q-px-xl q-pt-md">
+            <q-form class="">
+              <q-input class="" square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
                   <q-icon name="email" />
                 </template>
@@ -18,6 +16,7 @@
               <q-input 
               square clearable v-model="username" type="username" label="Username"
               lazy-rules
+              hide-bottom-space
               :rules="[ val => val && val.length > 0 || 'Please type something']">
                 <template v-slot:prepend>
                   <q-icon name="person" />
@@ -25,17 +24,17 @@
               </q-input>
               <q-input square clearable v-model="password" autocomplete="on" type="password" label="Password">
                 <template v-slot:prepend>
-                  <q-icon name="lock" />
+                  <q-icon name="lock"/>
                 </template>
               </q-input>
             </q-form>
           </q-card-section>
-          <q-card-actions class="q-px-lg">
-            <q-btn @click="register()" unelevated size="lg" color="green-5" class="full-width text-white"
+          <q-card-section class="text-center q-px-lg q-py-sm">
+            <q-btn @click="register()" unelevated size="lg" color="primary" class="full-width text-white"
                    label="Get Started" />
-          </q-card-actions>
-          <q-card-section class="text-center q-pa-sm">
-            <p class="link" @click="goToSignInPage()">Return to login</p>
+          </q-card-section>
+          <q-card-section class="text-center q-px-lg q-pb-md q-pt-xs">
+            <q-btn class="full-width" flat size="md" @click="goToSignInPage()">Return to login</q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -78,10 +77,5 @@ export default {
 </script>
 
 <style>
-  .link:hover {
-    color:blue;
-  }
-  .link {
-    color:grey;
-  }
+
 </style>

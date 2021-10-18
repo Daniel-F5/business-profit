@@ -1,6 +1,6 @@
 <template dir="rtl">
   <div class="q-py-md q-mx-xs pkoda-input" dir="rtl">
-    <q-form ref="myForm" class="q-gutter-sm q-mx-sm justify-evenly row items-start" @submit="onSubmit()">
+    <q-form autofocus ref="myForm" class="q-gutter-sm q-mx-sm justify-evenly row items-start" @submit="onSubmit()">
       <div class="col-md-2 col-sm-2 col-xs-12">
       <q-select dense class="text-subtitle1" stack-label label='סוג מסמך' v-model="localEditedPkoda.type" :options="typeOptions"
         hide-bottom-space lazy-rules :rules="[val => val.length > 0 || 'בחר סוג מסמך']"/>
@@ -40,7 +40,7 @@
       <div class="col col-sm-3 col-xs-12 column">
         <div class="">
       <q-input dense class="col col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close" hide-bottom-space
-            v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####" lazy-rules :rules="[val => val.length > 0 || 'תאריך שגוי']">
+            v-model="localEditedPkoda.date" label='תאריך' mask="##/##/####" lazy-rules :rules="[val => val.length === 10 || 'תאריך שגוי']">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy>
@@ -71,14 +71,15 @@
         </q-file>
       </div>
 
-      <div class="col col-sm-12 col-xs-12 column text-subtitle1" v-if="localEditedPkoda.doc.link" >
+      <div class="col row inline col-sm-12 col-xs-12 text-subtitle1 justify-between fit q-pb-sm" v-if="localEditedPkoda.doc.link" >
         <a
+        class="col"
           :href="localEditedPkoda.doc.link"
           target="popup"
           onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
-          <q-icon class="desktop-only col-3" name="receipt" size="xl"/>
+          <q-icon class="desktop-only" name="receipt" size="xl"/>
         </a>
-        <q-btn size="sm" dense class="col-6 center" glossy v-show="localEditedPkoda.doc.link" @click="removeDocFromPkoda()" label="מחק מסמך ועדכן פקודה">
+        <q-btn size="sm" dense class="col" glossy v-show="localEditedPkoda.doc.link" @click="removeDocFromPkoda()" label="מחק מסמך ועדכן פקודה">
           <q-icon name="delete"/>
         </q-btn>
       </div>
@@ -182,13 +183,12 @@ export default {
         this.fixNumbers()
       }
       const self = this
-
       if (this.file) {
-        this.localEditedPkoda.doc.fileName = id; //bug
-        this.localEditedPkoda.doc.fileType = this.file.type.split('/')[1]; //bug
+        this.localEditedPkoda.doc.fileName = id;
+        this.localEditedPkoda.doc.fileType = this.file.type.split('/')[1]; 
         self.addDoc().then(snapshot => {
           snapshot.ref.getDownloadURL().then(async url => {
-            self.localEditedPkoda.doc.link = url; //bug
+            self.localEditedPkoda.doc.link = url; 
             console.log(`Image Uploaded Successfully! Link: ${self.editedPkoda.doc.link}`);
             await self.setEditedPkodaInStore();
             self.insertPkoda().then(() => {
@@ -213,6 +213,7 @@ export default {
     },
 
     update() {
+      this.fixNumbers();
       this.setEditedPkodaInStore();
       const tempMonthAndYear = this.tempDate.slice(3);
       const editedPkodaMonthAndYear = this.editedPkoda.date.slice(3);
@@ -222,9 +223,25 @@ export default {
         this.deletePkoda(true);
         this.insert(lastId)
       } else {
-        this.updatePkoda().then(() => {
+        if (this.file) {
+        this.localEditedPkoda.doc.fileName = this.editedPkodaId;
+        this.localEditedPkoda.doc.fileType = this.file.type.split('/')[1]; 
+        const self = this;
+        self.addDoc().then(snapshot => {
+          snapshot.ref.getDownloadURL().then(async url => {
+            self.localEditedPkoda.doc.link = url; 
+            console.log(`Image Uploaded Successfully! Link: ${self.editedPkoda.doc.link}`);
+            await self.setEditedPkodaInStore();
+            self.updatePkoda().then(() => {
               this.goToHome()
-        }); //todo - build new function that update the database without use insert + remove
+              });
+            })
+          })
+        } else {
+          this.updatePkoda().then(() => {
+            this.goToHome()
+          });
+        }
       }
     },
 

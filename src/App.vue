@@ -16,8 +16,8 @@
           Business Profit
         </q-toolbar-title>
 
-        <q-item>{{userName}}</q-item>
-        <q-img v-if="this.user" :src='this.userPhoto' class="userImg"/>
+        <q-item class="items-center q-px-xs">{{userName}}</q-item>
+        <q-img v-if="this.user" :src='this.userPhoto' class="q-mx-sm userImg"/>
         <div>
           <q-btn id="loginBtn" v-if="!this.user" @click="goToLoginPage()">התחבר</q-btn>
 
@@ -88,7 +88,7 @@
         <q-btn flat to='/about' class="text-bold text-overline">about</q-btn>
         <q-btn flat to='/contact' class="text-bold text-overline">contact as</q-btn>
       </q-toolbar>
-      <p class="text-center justify-center">Daniel Farangian 2021©</p>
+      <q-item-label class="text-center items-center q-mb-sm">Daniel Farangian 2021©</q-item-label>
     </q-footer>
   </q-layout>
 </template>
@@ -143,6 +143,7 @@ export default {
   },
   mounted() {
     document.body.style.setProperty('--q-color-primary', '#5785BD')
+    document.body.style.setProperty('--q-color-secondary', '#435870')
     if (window.user){
       this.user = true;
       this.userPhoto = window.user.photoURL;

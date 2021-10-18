@@ -88,7 +88,6 @@ export default {
         pkoda.id = state.editedPkodaId
 
         //saves in DB
-        //need to remove the last pkoda and insert the new pkoda
         await database.update({entity: state.path, pkoda})
 
         //save in store

@@ -10,13 +10,11 @@
 
 <script>
 import AddPkoda from "@/components/AddPkoda";
-import {mapState} from "vuex";
 
 
 export default {
   name: "pkoda",
   computed: {
-    ...mapState('pkodot', ['editedPkodaId', 'editedPkoda', 'path']),
   },
   components: {
     AddPkoda

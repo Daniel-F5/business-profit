@@ -17,7 +17,7 @@
     >
       <template v-slot:top-left>
         <div class="row">
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="חפש">
+        <q-input class="q-pb-xs q-px-sm" borderless dense debounce="300" v-model="filter" bg-color="white" rounded outlined placeholder="חפש">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -51,6 +51,7 @@
       </template>
       <template v-slot:top-right>
         <q-btn
+          rounded outlined
           color="primary"
           icon-right="archive"
           label="Export to csv"
@@ -264,7 +265,7 @@ export default {
 
 .my-sticky-header-table
   /* height or max-height is important */
-  height: 550px
+  height: 35rem
 
   .q-table__top,
   .q-table__bottom,
@@ -284,8 +285,7 @@ export default {
   &.q-table--loading thead tr:last-child th
     /* height of   all previous header rows */
     top: 20px
-.q-btn-group, 
-.q-btn
+.q-btn-group
   background: #435870
   color: white
 </style>
