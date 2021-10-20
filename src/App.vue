@@ -86,7 +86,7 @@
       <q-toolbar class="justify-center">
         <q-btn flat to='/' class="text-bold text-overline">home</q-btn>
         <q-btn flat to='/about' class="text-bold text-overline">about</q-btn>
-        <q-btn flat to='/contact' class="text-bold text-overline">contact as</q-btn>
+        <q-btn flat to='/contact' class="text-bold text-overline">contact</q-btn>
       </q-toolbar>
       <q-item-label class="text-center items-center q-mb-sm">Daniel Farangian 2021©</q-item-label>
     </q-footer>

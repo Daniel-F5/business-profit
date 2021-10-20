@@ -5,15 +5,16 @@
         <h4 class="col text-center text-secondary q-my-md">Let's start!</h4>
       </div>
       <div class="row">
-        <q-card square class="shadow-24 q-px-md">
-          <q-card-section class="q-px-xl q-pt-md">
-            <q-form class="">
-              <q-input class="" square clearable v-model="email" type="email" label="Email">
+        <q-card square class="shadow-24 ">
+          <q-card-section class="column ">
+            <q-form class="q-gutter-sm q-mx-sm">
+              <q-input class="full-width" square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
                   <q-icon name="email" />
                 </template>
               </q-input>
               <q-input 
+              class="col full-width"
               square clearable v-model="username" type="username" label="Username"
               lazy-rules
               hide-bottom-space
@@ -22,7 +23,7 @@
                   <q-icon name="person" />
                 </template>
               </q-input>
-              <q-input square clearable v-model="password" autocomplete="on" type="password" label="Password">
+              <q-input class="col full-width" square clearable v-model="password" autocomplete="on" type="password" label="Password">
                 <template v-slot:prepend>
                   <q-icon name="lock"/>
                 </template>
