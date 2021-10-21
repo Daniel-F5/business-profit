@@ -2,13 +2,13 @@
   <q-page class="full-height full-width row justify-center items-center">
     <div>
       <div class="row">
-        <h4 class="col text-center text-secondary q-my-md">Let's start!</h4>
+        <h4 class="col text-center text-secondary q-my-md">Let's Start!</h4>
       </div>
       <div class="row">
         <q-card square class="shadow-24 ">
           <q-card-section class="column ">
-            <q-form class="q-gutter-sm q-mx-sm">
-              <q-input class="full-width" square clearable v-model="email" type="email" label="Email">
+            <q-form class="column q-gutter-sm q-px-lg">
+              <q-input class="col full-width" square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
                   <q-icon name="email" />
                 </template>

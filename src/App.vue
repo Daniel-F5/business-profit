@@ -2,19 +2,15 @@
   <q-layout view="lHh Lpr lFf" id="app">
     <q-header elevated class="glossy">
       <q-toolbar>
-        <q-btn
-            flat
-            dense
-            round
-            @click="leftDrawerOpen = !leftDrawerOpen"
-            aria-label="Menu"
-            icon="menu"
-            v-show="this.user"
-        />
 
-        <q-toolbar-title class="text-center text-bold	text-h5">
+        <q-toolbar-title class="gt-xs row text-center text-bold	text-h5 justify-center">
+          <img src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
           Business Profit
         </q-toolbar-title>
+        <q-toolbar-title class="lt-sm row">
+          <img src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
+        </q-toolbar-title>
+        
 
         <q-item class="items-center q-px-xs">{{userName}}</q-item>
         <q-img v-if="this.user" :src='this.userPhoto' class="q-mx-sm userImg"/>
@@ -26,58 +22,6 @@
         
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-        v-model="leftDrawerOpen"
-        bordered
-        content-class="bg-grey-2"
-    >
-      <q-list>
-        <q-item clickable @click="goToPage('user')">
-          <q-item-section avatar>
-            <q-icon name="school"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>הגדרות משתמש</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon name="code"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>דוחות</q-item-label>
-          </q-item-section>
-        </q-item>
-        <!-- <q-item clickable tag="a">
-          <q-item-section avatar>
-            <q-icon name=""/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a">
-          <q-item-section avatar>
-            <q-icon name="forum"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a">
-          <q-item-section avatar>
-            <q-icon name="rss_feed"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item> -->
-      </q-list>
-    </q-drawer>
 
     <q-page-container class="page">
       <router-view></router-view>
