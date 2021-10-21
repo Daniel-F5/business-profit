@@ -1,7 +1,6 @@
 <template>
   <q-page class="full-height column justify-center items-center">
     <section name="introduce">
-
     <div class="row justify-between items-center">
       <div class="col column text-right">
         <q-item-label class="text-h5 text-bold">?Business-profit מה זה בעצם</q-item-label>
@@ -31,9 +30,7 @@
   <div class="row q-pt-xl q-pb-md justify-evenly">
     <q-item-label class="text-h4 text-bold fit text-center"> ?Business-profit למה כדאי לעבוד עם</q-item-label>
   </div>
-  <q-card class="shadow-24" align="around"
-        style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
->
+  <q-card class="shadow-24 introduce-div" align="around">
   <div class="row inline q-ma-xs justify-evenly">
     <q-card-section class="col-lg-3 col-md-4 col-sm-12 ">
     <div class="text-center bg-primary feature">
@@ -77,6 +74,10 @@
 </script>
 
 <style lang="scss">
+.introduce-div{
+    background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)
+}
+
 .feature{
   opacity: 0.8;
 }

@@ -5,8 +5,8 @@
         <h4 class="col text-center text-secondary q-my-md">Let's Start!</h4>
       </div>
       <div class="row">
-        <q-card square class="shadow-24 ">
-          <q-card-section class="column ">
+        <q-card square class="shadow-24">
+          <q-card-section class="column">
             <q-form class="column q-gutter-sm q-px-lg">
               <q-input class="col full-width" square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
@@ -31,11 +31,11 @@
             </q-form>
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-py-sm">
-            <q-btn @click="register()" unelevated size="lg" color="primary" class="full-width text-white"
+            <q-btn glossy rounded @click="register()" unelevated size="lg" color="secondary" class="full-width text-white"
                    label="Get Started" />
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-pb-md q-pt-xs">
-            <q-btn class="full-width" flat size="md" @click="goToSignInPage()">Return to login</q-btn>
+            <q-btn rounded class="full-width" flat size="md" @click="goToSignInPage()">Return to login</q-btn>
           </q-card-section>
         </q-card>
       </div>

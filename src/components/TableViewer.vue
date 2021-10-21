@@ -17,34 +17,20 @@
     >
       <template v-slot:top-left>
         <div class="row">
-        <q-input class="q-pb-xs q-px-sm" borderless dense debounce="300" v-model="filter" bg-color="white" rounded outlined placeholder="חפש">
+        <q-input class="q-pb-xs q-px-sm" borderless dense debounce="300" 
+        v-model="filter" bg-color="white" rounded outlined placeholder="חפש">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
         <div class="row inline">
         <div class="q-px-sm">
-          <q-select
-              dense
-              rounded outlined
-              v-model="year"
-              :options="years"
-              label="בחר שנה"
-              style="min-width: 110px"
-              @input="setYear(year)"
-          />
+          <q-select class="year-select" dense rounded outlined v-model="year" 
+          :options="years" label="בחר שנה"  @input="setYear(year)"/>
         </div>
         <div class="q-px-sm">
-          <q-select
-              dense
-              rounded outlined
-              v-if="year"
-              v-model="month"
-              :options="monthsAndYears[year]"
-              label="בחר חודש"
-              style="min-width: 120px"
-              @input="setMonth(year, month)"
-          />
+          <q-select class="month-select" v-if="year" dense rounded outlined v-model="month" 
+          :options="monthsAndYears[year]" label="בחר חודש" @input="setMonth(year, month)"/>
         </div>
         </div>
         </div>
@@ -217,6 +203,7 @@ export default {
 
   created() {
     this.getPkodotOrderd();
+    //render the pkodot in the current mount
     if (this.pkodotHm){
       if (this.pkodotHm[this.currentYear]){
         if (this.pkodotHm[this.currentYear][this.currentMonth]){
@@ -239,6 +226,9 @@ export default {
 </script>
 
 <style lang="sass">
+.year-select, .month-select
+  min-width: 120px
+
 .my-sticky-header-table
   /* height or max-height is important */
   height: 41rem

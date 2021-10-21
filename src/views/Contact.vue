@@ -5,7 +5,7 @@
   <img class="q-ml-lg" src="../assets/profile.png" alt="profile-pic" width="200" height="200">
   <div class="column justify-center">
   <p class="row items-center text-center text-h3">היי, שמי דניאל!</p>
-  <p class="text-h6">אני מתכנת Full Stack, בן 28 מחריש.</p>
+  <p class="text-h6">אני מתכנת Full Stack, בן 27 מחריש.</p>
   </div>
   </div>
   
@@ -17,11 +17,13 @@
     <a href="https://www.linkedin.com/in/Daniel-F5/"><img class="icon q-mx-md" src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg" width="32" height="32" alt="linkedin"></a>
     <a href="https://www.facebook.com/daniel.farangian"><img class="icon q-mx-md" src="https://www.vectorlogo.zone/logos/facebook/facebook-official.svg" width="32" height="32" alt="facebook"></a>
   </div>
-  <q-item class="text-subtitle1 q-mt-xl">:האתר נבנתה בטכנולוגיות הבאות</q-item>
-  <div class="row">
+  <div class="column full-width items-center shadow-15 introduce-div">
+  <q-item class="col row text-subtitle1 q-mt-md text-white">:האתר נבנתה בטכנולוגיות הבאות</q-item>
+  <div class="col row q-mb-md">
   <img class="icon q-mx-md" src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase-logo" title="firebase">
-  <img class="icon q-mx-md" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" alt="vue.js-logo" title="vue.js">
+  <img class="icon q-mx-sm" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg" alt="vue.js-logo" title="vue.js">
   <img class="icon q-mx-md" src="../assets/logo.png" width="64" height="64" alt="quasar-logo" title="quasar">
+  </div>
   </div>
   </q-page>
 </template>

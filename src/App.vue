@@ -28,9 +28,9 @@
     </q-page-container>
     <q-footer elevated class="glossy">
       <q-toolbar class="justify-center">
-        <q-btn flat to='/' class="text-bold text-overline">home</q-btn>
-        <q-btn flat to='/about' class="text-bold text-overline">about</q-btn>
-        <q-btn flat to='/contact' class="text-bold text-overline">contact</q-btn>
+        <q-btn flat to='/' class="text-bold text-overline self-start">home</q-btn>
+        <q-btn flat to='/about' class="text-bold text-overline self-start">about</q-btn>
+        <q-btn flat to='/contact' class="text-bold text-overline self-start">contact</q-btn>
       </q-toolbar>
       <q-item-label class="text-center items-center q-mb-sm">Daniel Farangian 2021©</q-item-label>
     </q-footer>
@@ -98,6 +98,10 @@ export default {
 </script>
 
 <style lang="sass">
+.introduce-div
+  background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)
+
+
 .userImg 
   height: 32px;
   max-width: 32px;
