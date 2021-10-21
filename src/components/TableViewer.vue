@@ -61,26 +61,27 @@
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td auto-width key="type" :props="props">{{ props.row.type }}</q-td>
-          <q-td auto-width key="incomeOrExpense" :props="props">{{ props.row.incomeOrExpense }}</q-td>
-          <q-td auto-width key="referenceNumber" :props="props">{{ props.row.referenceNumber }}</q-td>
-          <q-td auto-width key="date" :props="props">{{ props.row.date }}</q-td>
-          <q-td auto-width key="prices.priceWithoutVAT" :props="props">
+          <q-td key="type" :props="props">{{ props.row.type }}</q-td>
+          <q-td key="incomeOrExpense" :props="props">{{ props.row.incomeOrExpense }}</q-td>
+          <q-td key="referenceNumber" :props="props">{{ props.row.referenceNumber }}</q-td>
+          <q-td key="date" :props="props">{{ props.row.date }}</q-td>
+          <q-td key="prices.priceWithoutVAT" :props="props">
             {{ props.row.prices.priceWithoutVAT }}
           </q-td>
-          <q-td auto-width key="prices.vat" :props="props">
+          <q-td key="prices.vat" :props="props">
             {{ props.row.prices.vat }}
           </q-td>
-          <q-td auto-width key="prices.priceIncludeVAT" :props="props">
+          <q-td key="prices.priceIncludeVAT" :props="props">
             {{ props.row.prices.priceIncludeVAT }}
           </q-td>
           <q-td key="details" :props="props">{{ props.row.details }}</q-td>
-          <q-td auto-width key="quantity" :props="props">{{ props.row.quantity }}</q-td>
-          <q-td auto-width key="docLink" :props="props">
+          <q-td key="quantity" :props="props">{{ props.row.quantity }}</q-td>
+          <q-td key="docLink" :props="props">
             <div v-if="props.row.doc.link">
               <a :props="props"
                  :href="props.row.doc.link"
                  target="popup"
+                 style="text-decoration:none"
                  onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
                 <q-icon class="desktop-only" name="receipt" size="md">
                 </q-icon>
@@ -95,23 +96,7 @@
           </q-td>
         </q-tr>
       </template>
-
-      <!-- <template v-slot:pagination>
-        <q-table
-            :columns="[columns[0],columns[8],columns[4],columns[5],columns[6]]"
-            style="background-color: #c1f4cd"
-        >
-          <template v-slot:body>
-            <q-trs>
-              <q-td>
-              </q-td>
-            </q-trs>
-          </template>
-        </q-table>
-      </template> -->
     </q-table>
-    <!-- <q-footer elevated>
-    </q-footer> -->
   </div>
 </template>
 
@@ -201,14 +186,6 @@ export default {
           content,
           'text/csv'
         )
-
-        // if (status !== true) {
-        //   $q.notify({
-        //     message: 'Browser denied file download...',
-        //     color: 'negative',
-        //     icon: 'warning'
-        //   })
-        // }
       },
 
     deleteDoc() {
@@ -262,10 +239,9 @@ export default {
 </script>
 
 <style lang="sass">
-
 .my-sticky-header-table
   /* height or max-height is important */
-  height: 35rem
+  height: 41rem
 
   .q-table__top,
   .q-table__bottom,
