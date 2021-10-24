@@ -69,8 +69,7 @@
                  target="popup"
                  style="text-decoration:none"
                  onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
-                <q-icon class="desktop-only" name="receipt" size="md">
-                </q-icon>
+                <q-icon name="receipt" size="md" />
               </a>
             </div>
           </q-td>

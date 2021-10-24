@@ -11,30 +11,21 @@
       </div>
 
       <div class="col-md-2 col-sm-3 col-xs-12">
-        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-         maxlength="20" v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ'>
-         <template v-slot:append>
-           <q-btn size="md" dense glossy @click="vatFromPriceWithout(localEditedPkoda.prices.priceWithoutVAT)">
-            <q-icon name="calculate"/>
-           </q-btn>  
-         </template>
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="text"
+          oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/g, '').replace(/(?<!^)-/g, '');"
+          maxlength="20" v-model="localEditedPkoda.prices.priceWithoutVAT" label='סכום ללא מע"מ'/>
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="text"
+          oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/g, '').replace(/(?<!^)-/g, '');"
+          maxlength="20"  v-model="localEditedPkoda.prices.vat" label='מע"מ'>
+          <template v-slot:append>
+            <q-btn size="md" dense glossy @click="vatCalculate()">
+              <q-icon name="calculate"/>
+            </q-btn>
+          </template>
         </q-input>
-        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close"
-            maxlength="20" type="number" v-model="localEditedPkoda.prices.vat" label='מע"מ'>
-                 <template v-slot:append>
-                <q-btn size="md" dense glossy @click="vatCalculate()">
-                  <q-icon name="calculate"/>
-                </q-btn>
-                 </template>
-        </q-input>
-        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="number"
-            maxlength="20" v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'>
-        <template v-slot:append>
-          <q-btn size="md" dense glossy @click="vatFromPriceInc(localEditedPkoda.prices.priceIncludeVAT)">
-            <q-icon name="calculate"/>
-          </q-btn>
-        </template>
-        </q-input>
+        <q-input dense class="text-subtitle1" stack-label clearable clear-icon="close" type="text"
+        oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/g, '').replace(/(?<!^)-/g, '');"  
+            maxlength="20" v-model="localEditedPkoda.prices.priceIncludeVAT" label='סכום כולל מע"מ'/>
       </div>
       
       <div class="col col-sm-3 col-xs-12 column">
@@ -54,7 +45,8 @@
         </template>
       </q-input>
       <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
-        maxlength="20" type="number" v-model="localEditedPkoda.quantity" label='כמות'/>
+        oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/g, '').replace(/(?<!^)-/g, '');"
+        maxlength="20" type="text" v-model="localEditedPkoda.quantity" label='כמות'/>
       
       <q-input dense class="col-md-10 col-sm-11 col-xs-12 text-subtitle1" stack-label clearable clear-icon="close"
         maxlength="40" v-model="localEditedPkoda.details" label='פרטים'/>
@@ -76,8 +68,9 @@
         class="col"
           :href="localEditedPkoda.doc.link"
           target="popup"
+          style="text-decoration:none"
           onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
-          <q-icon class="desktop-only" name="receipt" size="xl"/>
+          <q-icon name="receipt" size="xl"/>
         </a>
         <q-btn size="sm" dense class="col" glossy v-show="localEditedPkoda.doc.link" @click="removeDocFromPkoda()" label="מחק מסמך ועדכן פקודה">
           <q-icon name="delete"/>
@@ -263,10 +256,23 @@ export default {
     },
 
     vatCalculate() {
-      let checkIfVatEmpty = (this.localEditedPkoda.prices.vat == 0 || this.localEditedPkoda.prices.vat === null);
+      let checkIfVatEmpty = this.localEditedPkoda.prices.vat === null;
       //calculate from the price include v.a.t.
-      if (this.localEditedPkoda.prices.priceWithoutVAT == 0 || this.localEditedPkoda.prices.priceWithoutVAT === null){
-        if (this.localEditedPkoda.prices.priceIncludeVAT != 0 || this.localEditedPkoda.prices.priceIncludeVAT !== null){
+      if (this.localEditedPkoda.prices.priceWithoutVAT === null){
+        if (this.localEditedPkoda.prices.priceIncludeVAT === null){
+          if (checkIfVatEmpty){
+            //can't calculate, enter price without v.a.t. or price include v.a.t.
+            this.localEditedPkoda.prices.vat = 0;
+            this.localEditedPkoda.prices.priceWithoutVAT = 0;
+            this.localEditedPkoda.prices.priceIncludeVAT = 0;
+          } else {
+            this.localEditedPkoda.prices.vat = parseFloat(this.localEditedPkoda.prices.vat);
+            this.localEditedPkoda.prices.priceWithoutVAT = (this.localEditedPkoda.prices.vat / 0.17).toFixed(2);
+            this.localEditedPkoda.prices.priceWithoutVAT = parseFloat(this.localEditedPkoda.prices.priceWithoutVAT);
+            this.localEditedPkoda.prices.priceIncludeVAT = this.localEditedPkoda.prices.priceWithoutVAT + this.localEditedPkoda.prices.vat;
+          }
+        }
+        else {
           //calculate 17% v.a.t if the vat input is empty
           if (checkIfVatEmpty){
             this.vatFromPriceInc();
@@ -284,15 +290,11 @@ export default {
             }
           }
         }
-        // there is missing numbers to calculate..
-        else {
-          //can't calculate please enter price without v.a.t. or price include v.a.t.
-        }
       }
       //calculate from the price without v.a.t.
       else {
         
-        if (this.localEditedPkoda.prices.priceIncludeVAT == 0 || this.localEditedPkoda.prices.priceIncludeVAT === null){
+        if (this.localEditedPkoda.prices.priceIncludeVAT === null){
           if (checkIfVatEmpty){
             this.vatFromPriceWithout();
           } else {
@@ -312,9 +314,31 @@ export default {
         
         else {
           if (checkIfVatEmpty){
-
+            this.localEditedPkoda.prices.priceWithoutVAT = parseFloat(this.localEditedPkoda.prices.priceWithoutVAT);
+            this.localEditedPkoda.prices.priceIncludeVAT = parseFloat(this.localEditedPkoda.prices.priceIncludeVAT);
+            if (this.localEditedPkoda.prices.priceWithoutVAT >= this.localEditedPkoda.prices.priceIncludeVAT){
+              let maxPrice = this.localEditedPkoda.prices.priceIncludeVAT;
+              this.localEditedPkoda.prices.priceWithoutVAT = maxPrice;
+              this.localEditedPkoda.prices.vat = 0;
+            } else {
+              this.localEditedPkoda.prices.vat = this.localEditedPkoda.prices.priceIncludeVAT - this.localEditedPkoda.prices.priceWithoutVAT;
+            }
+          } else {
+            this.fixNumbers();
+            let maxVat = (this.localEditedPkoda.prices.priceIncludeVAT - (this.localEditedPkoda.prices.priceIncludeVAT / 1.17)).toFixed(2);
+            let maxPrice = this.localEditedPkoda.prices.priceIncludeVAT.toFixed(2)
+            if (this.localEditedPkoda.prices.priceWithoutVAT >= this.localEditedPkoda.prices.priceIncludeVAT){
+              this.localEditedPkoda.prices.priceWithoutVAT = maxPrice;
+              this.localEditedPkoda.prices.vat = 0;
+            }
+            if (this.localEditedPkoda.prices.vat >= maxVat){
+              this.localEditedPkoda.prices.vat = maxVat;
+              this.localEditedPkoda.prices.priceWithoutVAT = this.localEditedPkoda.prices.priceIncludeVAT - maxVat;
+            }
+            if ((this.localEditedPkoda.prices.priceWithoutVAT + this.localEditedPkoda.prices.vat) != this.localEditedPkoda.prices.priceIncludeVAT){
+              this.localEditedPkoda.prices.priceWithoutVAT = this.localEditedPkoda.prices.priceIncludeVAT - this.localEditedPkoda.prices.vat;
+            }
           }
-          
         }
       }
     },
