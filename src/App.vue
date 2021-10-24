@@ -28,11 +28,11 @@
     </q-page-container>
     <q-footer elevated class="glossy">
       <q-toolbar class="justify-center">
-        <q-btn flat to='/' class="text-bold text-overline self-start">home</q-btn>
-        <q-btn flat to='/about' class="text-bold text-overline self-start">about</q-btn>
-        <q-btn flat to='/contact' class="text-bold text-overline self-start">contact</q-btn>
+        <q-btn flat to='/' class="text-bold text-overline self-start">דף הבית</q-btn>
+        <q-btn flat to='/about' class="text-bold text-overline self-start">אודות</q-btn>
+        <q-btn flat to='/contact' class="text-bold text-overline self-start">צור קשר</q-btn>
       </q-toolbar>
-      <q-item-label class="text-center items-center q-mb-sm">Daniel Farangian 2021©</q-item-label>
+      <q-item-label class="text-center items-center q-mb-sm">©דניאל פרנגיאן 2021</q-item-label>
     </q-footer>
   </q-layout>
 </template>

@@ -2,20 +2,20 @@
   <q-page class="full-height full-width row justify-center items-center">
     <div>
       <div class="row">
-        <h4 class="col text-center text-secondary q-my-md">Let's Start!</h4>
+        <h4 class="col text-center text-secondary q-my-md">!ברוך הבא</h4>
       </div>
       <div class="row">
         <q-card square class="shadow-24">
           <q-card-section class="column">
             <q-form class="column q-gutter-sm q-px-lg">
-              <q-input class="col full-width" square clearable v-model="email" type="email" label="Email">
+              <q-input class="col full-width" square clearable v-model="email" type="email" label="אימייל">
                 <template v-slot:prepend>
                   <q-icon name="email" />
                 </template>
               </q-input>
               <q-input 
               class="col full-width"
-              square clearable v-model="username" type="username" label="Username"
+              square clearable v-model="username" type="username" label="שם מלא"
               lazy-rules
               hide-bottom-space
               :rules="[ val => val && val.length > 0 || 'Please type something']">
@@ -23,7 +23,7 @@
                   <q-icon name="person" />
                 </template>
               </q-input>
-              <q-input class="col full-width" square clearable v-model="password" autocomplete="on" type="password" label="Password">
+              <q-input class="col full-width" square clearable v-model="password" autocomplete="on" type="password" label="סיסמה">
                 <template v-slot:prepend>
                   <q-icon name="lock"/>
                 </template>
@@ -32,10 +32,10 @@
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-py-sm">
             <q-btn glossy rounded @click="register()" unelevated size="lg" color="secondary" class="full-width text-white"
-                   label="Get Started" />
+                   label="צור משתמש" />
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-pb-md q-pt-xs">
-            <q-btn rounded class="full-width" flat size="md" @click="goToSignInPage()">Return to login</q-btn>
+            <q-btn rounded class="full-width" flat size="md" @click="goToSignInPage()" label="חזור לדף ההתחברות" />
           </q-card-section>
         </q-card>
       </div>

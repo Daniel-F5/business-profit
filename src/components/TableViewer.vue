@@ -40,7 +40,7 @@
           rounded outlined
           color="primary"
           icon-right="archive"
-          label="Export to csv"
+          label="יצא לקובץ csv"
           no-caps
           @click="exportTable"
         />
@@ -156,7 +156,17 @@ export default {
 
     exportTable () {
         // naive encoding to csv format
-        let rows = this.pkodot;
+        let rows = []
+        for (let pkoda of this.pkodot) {
+          for (const property in pkoda) {
+            if (property === 'prices'){
+              pkoda.priceWithoutVAT = pkoda.prices.priceWithoutVAT;
+              pkoda.vat = pkoda.prices.vat;
+              pkoda.priceIncludeVAT = pkoda.prices.priceIncludeVAT;
+            }
+          }
+          rows.push(pkoda);
+        }
         const content = [this.columns.map(col => this.wrapCsvValue(col.label))].concat(
           rows.map(row => this.columns.map(col => this.wrapCsvValue(
             typeof col.field === 'function'
