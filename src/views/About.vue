@@ -3,16 +3,11 @@
     <section name="introduce">
     <div class="row justify-between items-center q-mb-lg">
       <div class="col column text-right">
-        <q-item-label class="text-h4 text-bold">?Business-profit מה זה בעצם</q-item-label>
+        <q-item-label class="text-h4 text-bold">?מי אנחנו</q-item-label>
         <br>
-        <p class="text-subtitle1">היא פלטפורמה לניהול הוצאות והכנסות העסק Business-profit
-          <br>
-          בעבר עסקים היו מנהלים את ההוצאות שלהם ע"י שירותי הנהלת חשבונות
-          <br>
-          החסרון הוא שלא ניתן לעקוב אחרי מה שנרשם בפועל בספרים ולא מעט פעמים הוצאות נאבדו או הכנסות לא נרשמו
-          <br>
-          <b>!Business-profit בדיוק בשביל זה יש את</b>
-          </p>
+        <p class="text-subtitle1 text-bold">.היא פלטפורמה חכמה לניהול הוצאות והכנסות העסק Business-profit</p>
+          <p class="text-subtitle1 text-bold">.ניהול המסמכים בעסק לא צריך להיות יותר מסורבל</p>
+          <p class="text-subtitle1 text-bold">!Business-profit-פשוט השתמשו ב</p>
       </div>
 
       <div class="q-pt-xl q-pl-xl">
@@ -38,7 +33,7 @@
     <q-separator inset />
     <q-item-label class="text-h5 text-white q-pb-md q-pt-lg">גיבוי המסמכים שלך</q-item-label>
     <q-item-label class="text-subtitle1 q-pb-xl q-mx-lg">
-      שום דבר מסמך לא ילך יותר לאיבוד! סרוקים את המסמכים והכל מגובה בענן 
+      אף מסמך לא ילך יותר לאיבוד! סרוקים את המסמכים והכל נשמר בענן 
     </q-item-label>
     </div>
     </q-card-section>
@@ -49,7 +44,7 @@
     <q-separator inset />
     <q-item-label class="text-h5 text-white q-py-lg">קל למצוא העתקי חשבוניות</q-item-label>
     <q-item-label class="text-subtitle1 q-pb-lg q-mx-md">
-      ניתן לסרוק חשבוניות ובכל פעם שתרצה העתק מסמך לא תצטרך לחפש בערימת ניירת
+    ניתן לסרוק חשבוניות, לצרף לרישום ולהגיד ביי לערימת הניירת במשרד
     </q-item-label>
     </div>
     </q-card-section>
