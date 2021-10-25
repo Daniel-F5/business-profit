@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
   if (user === null){
     user = false;
   }
-  if (!user && to.meta.authRequired || user && !to.meta.authRequired){
+  if (!user && to.meta.authRequired){
     const path = !user ? '/' : to.fullPath;
     return next(path)
   }
