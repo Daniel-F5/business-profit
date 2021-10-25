@@ -35,6 +35,9 @@ export default {
 </script>
 
 <style>
+.introduce-div{
+    background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)
+}
 .icon{
   opacity: 0.7;
 }

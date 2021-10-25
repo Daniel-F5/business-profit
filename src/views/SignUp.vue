@@ -1,13 +1,13 @@
 <template>
   <q-page class="full-height full-width row justify-center items-center">
-    <div>
-      <div class="row">
+      <div class="column">
+      <div class="row q-mb-md">
         <h4 class="col text-center text-secondary q-my-md">!ברוך הבא</h4>
       </div>
-      <div class="row">
+      <div class="row justify-center">
         <q-card square class="shadow-24">
           <q-card-section class="column">
-            <q-form class="column q-gutter-sm q-px-lg">
+            <q-form class="column q-gutter-sm q-mx-sm q-mt-sm">
               <q-input class="col full-width" square clearable v-model="email" type="email" label="אימייל">
                 <template v-slot:prepend>
                   <q-icon name="email" />
@@ -31,13 +31,14 @@
             </q-form>
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-py-sm">
-            <q-btn glossy rounded @click="register()" unelevated size="lg" color="secondary" class="full-width text-white"
+            <q-btn @click="register()" unelevated size="lg" color="primary" class="full-width text-white"
                    label="צור משתמש" />
           </q-card-section>
           <q-card-section class="text-center q-px-lg q-pb-md q-pt-xs">
-            <q-btn rounded class="full-width" flat size="md" @click="goToSignInPage()" label="חזור לדף ההתחברות" />
+            <q-btn class="full-width" flat size="md" @click="goToSignInPage()" label="חזור לדף ההתחברות" />
           </q-card-section>
         </q-card>
+        <img class="q-ml-xs" src="../assets/bookkeeping.jpg" alt="bookkeeping-pic" width="370" height="370">
       </div>
     </div>
   </q-page>

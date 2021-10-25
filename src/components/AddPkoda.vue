@@ -18,7 +18,7 @@
           oninput="this.value = this.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1').replace(/^0+/g, '').replace(/(?<!^)-/g, '');"
           maxlength="20"  v-model="localEditedPkoda.prices.vat" label='מע"מ'>
           <template v-slot:append>
-            <q-btn size="md" dense glossy @click="vatCalculate()">
+            <q-btn size="md" dense @click="vatCalculate()">
               <q-icon name="calculate"/>
             </q-btn>
           </template>
@@ -72,18 +72,18 @@
           onclick="window.open(`${href}`,'popup','width=600,height=600,scrollbars=no,resizable=no'); return false;">
           <q-icon name="receipt" size="xl"/>
         </a>
-        <q-btn size="sm" dense class="col" glossy v-show="localEditedPkoda.doc.link" @click="removeDocFromPkoda()" label="מחק מסמך ועדכן פקודה">
+        <q-btn size="md" color="secondary" dense class="col" v-show="localEditedPkoda.doc.link" @click="removeDocFromPkoda()" label="מחק מסמך ועדכן פקודה">
           <q-icon name="delete"/>
         </q-btn>
       </div>
 
         <div class="col-md-3 col-sm-5 col-xs-5 q-pb-sm" v-if="!localEditedPkoda.id">
-          <q-btn type="submit" class="fit text-bold" size="md" glossy  label="הזן פקודה" color="primary" text-color="white"/>
+          <q-btn type="submit" class="fit text-bold" size="md" :disable="!validInputs" label="הזן פקודה" color="primary" text-color="white"/>
         </div>
         <q-btn-group dir="ltr" class="fit" v-if="localEditedPkoda.id">
-        <q-btn size="sm" type="submit" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="עדכן פקודה"><q-icon name="update"/></q-btn>
-        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="מחק פקודה" @click="remove()"><q-icon name="delete"/></q-btn>
-        <q-btn size="sm" class="col-4 text-bold" glossy v-if="localEditedPkoda.id" label="חזור לעמוד הראשי" @click="goToHome()"><q-icon name="home"/></q-btn>
+        <q-btn size="sm" type="submit" class="col-4 text-bold" :disable="!validInputs" v-if="localEditedPkoda.id" label="עדכן פקודה"><q-icon name="update"/></q-btn>
+        <q-btn size="sm" class="col-4 text-bold" v-if="localEditedPkoda.id" label="מחק פקודה" @click="remove()"><q-icon name="delete"/></q-btn>
+        <q-btn size="sm" class="col-4 text-bold" v-if="localEditedPkoda.id" label="חזור לעמוד הראשי" @click="goToHome()"><q-icon name="home"/></q-btn>
         </q-btn-group>
         </div>
       </div>
@@ -102,6 +102,15 @@ export default {
   name: "AddPkoda",
   props: ['tableName'],
   computed: {
+    priceWithoutVAT() {
+      return this.localEditedPkoda.prices.priceWithoutVAT;
+    },
+    priceIncludeVAT() {
+      return this.localEditedPkoda.prices.priceIncludeVAT;
+    },
+    vat() {
+      return this.localEditedPkoda.prices.vat;
+    },
     ...mapState('pkodot', ['pkodot', 'editedPkodaId', 'editedPkoda', 'path']),
     ...mapGetters('pkodot', ['getNewId'])
   },
@@ -127,7 +136,8 @@ export default {
         }
       },
       file: null,
-      tempDate: null
+      tempDate: null,
+      validInputs: false
     }
   },
 
@@ -373,7 +383,12 @@ export default {
         this.update()
       })
     },
-
+    checkInputPrices() {
+      const incVat = parseFloat(this.localEditedPkoda.prices.priceIncludeVAT);
+      const withoutVat = parseFloat(this.localEditedPkoda.prices.priceWithoutVAT);
+      const vat = parseFloat(this.localEditedPkoda.prices.vat);
+      this.validInputs = (withoutVat + vat === incVat && incVat - (incVat / 1.17) >= vat) ? true : false;
+    },
     async deleteDoc() {
       const storage = firebaseInstance.firebase.storage();
       const storageRef = storage.ref(`users/${window.user.uid}/${this.path}`);
@@ -382,6 +397,17 @@ export default {
       })
       return;
     },
+  },
+  watch: {
+    vat() {
+      this.checkInputPrices()
+    },
+    priceIncludeVAT() {
+      this.checkInputPrices()
+    },
+    priceWithoutVAT() {
+      this.checkInputPrices()
+    }
   },
 
   created() {
@@ -400,13 +426,14 @@ export default {
             this.tempDate = this.editedPkoda.date
           })
     }
+    this.checkInputPrices()
   }
 }
 </script>
 
 <style lang="sass">
 .pkoda-input
-  border: white
+  border: #6EA9F0
   border-style: solid
   border-radius: 10px
   border-width: 1px

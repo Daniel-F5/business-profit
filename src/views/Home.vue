@@ -1,7 +1,5 @@
 <template>
-  <q-page
-  class="page"
-  >
+  <q-page>
   <div class="home">
     <AddPkoda :tableName="'pkodot'"/>
     <TableViewer :tableName="'pkodot'"/>

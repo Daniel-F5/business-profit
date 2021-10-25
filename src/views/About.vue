@@ -1,11 +1,11 @@
 <template>
   <q-page class="full-height column justify-center items-center">
     <section name="introduce">
-    <div class="row justify-between items-center">
+    <div class="row justify-between items-center q-mb-lg">
       <div class="col column text-right">
-        <q-item-label class="text-h5 text-bold">?Business-profit מה זה בעצם</q-item-label>
+        <q-item-label class="text-h4 text-bold">?Business-profit מה זה בעצם</q-item-label>
         <br>
-        <p class="text-subtitle2">היא פלטפורמה לניהול הוצאות והכנסות העסק Business-profit
+        <p class="text-subtitle1">היא פלטפורמה לניהול הוצאות והכנסות העסק Business-profit
           <br>
           בעבר עסקים היו מנהלים את ההוצאות שלהם ע"י שירותי הנהלת חשבונות
           <br>
@@ -27,9 +27,9 @@
     </section>
 
 <section name="features">
-  <div class="row q-pt-xl q-pb-md justify-evenly">
-    <q-item-label class="text-h4 text-bold fit text-center"> ?Business-profit למה כדאי לעבוד עם</q-item-label>
-  </div>
+  <div class="row q-pt-md q-pb-md justify-evenly introduce-div">
+    <q-item-label class="text-h4 text-bold fit text-center text-white q-ml-md" color="white">
+         ?Business-profit למה כדאי לעבוד עם</q-item-label>
   <q-card class="shadow-24 introduce-div" align="around">
   <div class="row inline q-ma-xs justify-evenly">
     <q-card-section class="col-lg-3 col-md-4 col-sm-12 ">
@@ -66,6 +66,7 @@
     </q-card-section>
   </div>
   </q-card>
+  </div>
 </section>
   </q-page>
 </template>

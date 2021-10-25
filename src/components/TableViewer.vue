@@ -18,18 +18,18 @@
       <template v-slot:top-left>
         <div class="row">
         <q-input class="q-pb-xs q-px-sm" borderless dense debounce="300" 
-        v-model="filter" bg-color="white" rounded outlined placeholder="חפש">
+        v-model="filter" bg-color="white" outlined placeholder="חפש">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
         <div class="row inline">
         <div class="q-px-sm">
-          <q-select class="year-select" dense rounded outlined v-model="year" 
+          <q-select class="year-select" dense outlined bg-color="white" label-color="primary" v-model="year" 
           :options="years" label="בחר שנה"  @input="setYear(year)"/>
         </div>
         <div class="q-px-sm">
-          <q-select class="month-select" v-if="year" dense rounded outlined v-model="month" 
+          <q-select class="month-select" v-if="year" dense outlined bg-color="white" label-color="primary" v-model="month" 
           :options="monthsAndYears[year]" label="בחר חודש" @input="setMonth(year, month)"/>
         </div>
         </div>
@@ -37,8 +37,8 @@
       </template>
       <template v-slot:top-right>
         <q-btn
-          rounded outlined
-          color="primary"
+          outline
+          color="white"
           icon-right="archive"
           label="יצא לקובץ csv"
           no-caps
@@ -74,9 +74,9 @@
             </div>
           </q-td>
           <q-td key="actions" :props="props">
-            <q-btn-group rounded dir="ltr">
-            <q-btn glossy @click="remove(props.row)">מחק</q-btn>
-            <q-btn glossy @click="goToPkoda(props.row)">עדכן</q-btn>
+            <q-btn-group dir="ltr">
+            <q-btn @click="remove(props.row)">מחק</q-btn>
+            <q-btn @click="goToPkoda(props.row)">עדכן</q-btn>
             </q-btn-group>
           </q-td>
         </q-tr>
@@ -246,7 +246,7 @@ export default {
   .q-table__bottom,
   thead tr:first-child th
     /* bg color is important for th; just specify one */
-    background-color: #6EA9F0
+    background-color: #5785BD
 
   thead tr th
     position: sticky

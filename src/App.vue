@@ -1,32 +1,27 @@
 <template>
   <q-layout view="lHh Lpr lFf" id="app">
-    <q-header elevated class="glossy">
+    <q-header elevated class="bg-secondary">
       <q-toolbar>
-
+        <div>
+          <q-btn outline class="text-bold" id="loginBtn" v-if="!this.user" to='/' label="התחבר"/>
+          <q-btn outline class="text-bold" id="logoutBtn" v-if="this.user" @click="userLogout()" label="התנתק"/>
+        </div>
         <q-toolbar-title class="gt-xs row text-center text-bold	text-h5 justify-center">
           <img src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
           Business Profit
         </q-toolbar-title>
-        <q-toolbar-title class="lt-sm row">
+        <q-toolbar-title class="lt-sm row justify-center">
           <img src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
         </q-toolbar-title>
-        
-
         <q-item class="items-center q-px-xs">{{userName}}</q-item>
-        <q-img v-if="this.user" :src='this.userPhoto' class="q-mx-sm userImg"/>
-        <div>
-          <q-btn id="loginBtn" v-if="!this.user" @click="goToLoginPage()">התחבר</q-btn>
-
-          <q-btn id="logoutBtn" v-if="this.user" @click="userLogout()">התנתק</q-btn>
-        </div>
-        
+        <q-img v-if="this.user" :src='this.userPhoto' class="q-px-sm userImg"/>
       </q-toolbar>
     </q-header>
 
     <q-page-container class="page">
       <router-view></router-view>
     </q-page-container>
-    <q-footer elevated class="glossy">
+    <q-footer elevated class="bg-secondary">
       <q-toolbar class="justify-center">
         <q-btn flat to='/' class="text-bold text-overline self-start">דף הבית</q-btn>
         <q-btn flat to='/about' class="text-bold text-overline self-start">אודות</q-btn>
@@ -58,20 +53,6 @@ export default {
         // An error happened.
       });
     },
-    goToPage(path) {
-      if (this.$route.path === `/${path}`){
-        return;
-      } else {
-        this.$router.push(`/${path}`)
-      }
-    },
-    goToLoginPage(){
-      if (this.$route.path === `/`){
-        return;
-      } else {
-        this.$router.push(`/`)
-      }
-    }
   },
   components: {
     Home
@@ -98,17 +79,15 @@ export default {
 </script>
 
 <style lang="sass">
-.introduce-div
-  background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)
-
-
 .userImg 
   height: 32px;
   max-width: 32px;
   border-radius: 50%
   
-.page
-    background-color:#B8D2F2
+#loginBtn, #logoutBtn
+  color: #B8D2F2;
+  
+
 
 // 
 // color palette

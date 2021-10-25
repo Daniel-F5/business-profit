@@ -1,9 +1,10 @@
 <template>
-  <q-page
-  class="page"
-  >
+  <q-page>
   <div>
     <add-pkoda :tableName="tableName"></add-pkoda>
+  </div>
+  <div class="row justify-center q-pt-xl">
+  <img class="q-ml-xs" src="../assets/invoice-illustration.jpg" alt="invoice-illustration" width="370" height="370">
   </div>
   </q-page>
 </template>
@@ -35,7 +36,4 @@ export default {
 </script>
 
 <style lang="sass">
-.page
-  background-color:#B8D2F2
-
 </style>
