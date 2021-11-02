@@ -1,5 +1,6 @@
-<template dir="rtl">
-  <q-card class="q-py-md q-mx-xs pkoda-input relative-position" dir="rtl">
+<template>
+<div class="q-pt-xs">
+  <q-card class="q-py-sm q-mx-xs pkoda-input" dir="rtl">
     <q-form
       autofocus
       ref="myForm"
@@ -242,6 +243,7 @@
       :showing="inProcess"
     />
   </q-card>
+  </div>
 </template>
 
 <script>
@@ -445,11 +447,10 @@ export default {
     },
 
     vatCalculate() {
-      let checkIfVatEmpty = this.localEditedPkoda.prices.vat === null;
-      let checkIfIncVatEmpty =
-        this.localEditedPkoda.prices.priceIncludeVAT === null;
+      let checkIfVatEmpty = (this.localEditedPkoda.prices.vat === null || this.localEditedPkoda.prices.vat === '');
+      let checkIfIncVatEmpty = (this.localEditedPkoda.prices.priceIncludeVAT === null || this.localEditedPkoda.prices.priceIncludeVAT === '');
       //calculate from the price include v.a.t.
-      if (this.localEditedPkoda.prices.priceWithoutVAT === null) {
+      if (this.localEditedPkoda.prices.priceWithoutVAT === null || this.localEditedPkoda.prices.priceWithoutVAT === '') {
         if (checkIfIncVatEmpty) {
           if (checkIfVatEmpty) {
             //can't calculate, enter price without v.a.t. or price include v.a.t.

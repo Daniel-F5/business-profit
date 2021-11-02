@@ -7,7 +7,7 @@
           <q-btn outline class="text-bold" id="logoutBtn" v-if="this.user" @click="userLogout()" label="התנתק"/>
         </div>
         <q-toolbar-title class="gt-xs row text-center text-bold	text-h5 justify-center">
-          <img src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
+          <img class="q-pr-xs" src="./assets/business-profit-icon.png" width="32" height="32" alt="business-profit-icon">
           Business Profit
         </q-toolbar-title>
         <q-toolbar-title class="lt-sm row justify-center">

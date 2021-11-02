@@ -2,8 +2,7 @@
   <!--  render in table-->
   <div class="q-pa-xs" dir="rtl">
     <q-table
-        class="my-sticky-header-table pkodot-table"
-        title="פקודות יומן"
+        class="my-sticky-header-table"
         :data="pkodot"
         :columns="columns"
         :filter="filter"
@@ -11,6 +10,7 @@
         no-data-label="אין נתונים"
         flat
         bordered
+        dense
         binary-state-sort
         virtual-scroll
         :rows-per-page-options="[0]"
